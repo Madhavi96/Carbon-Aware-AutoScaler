@@ -1,0 +1,122 @@
+Count,Message,Traceback,Nodes
+100,'data',"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 236, in query_and_preserve_use
+    if res.json()[""data""] != ""Success"":
+       ~~~~~~~~~~^^^^^^^^
+",local
+18,"can only concatenate list (not ""NoneType"") to list","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 326, in query_and_rebook_use
+    self.query_and_rebook(headers=headers)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 975, in query_and_rebook
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+667,"can only concatenate list (not ""NoneType"") to list","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 363, in query_order_and_pay_use
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+610,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 309, in query_and_put_consign_use
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+12,"can only concatenate list (not ""NoneType"") to list","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 268, in query_and_cancel_use
+    self.query_one_and_cancel(headers=headers,uuid=self.uuid,)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 901, in query_one_and_cancel
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+10,"can only concatenate list (not ""NoneType"") to list","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 279, in query_and_collect_ticket_use
+    self.query_and_collect_ticket(headers=headers)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 921, in query_and_collect_ticket
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+11,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 291, in query_and_enter_station_use
+    self.query_and_enter_station(headers=headers)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 939, in query_and_enter_station
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+204,Cannot choose from an empty sequence,"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 194, in query_and_preserve_use
+    trip_id = self.random_from_list(trip_ids)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 30, in random_from_list
+    return random.choice(l)
+           ^^^^^^^^^^^^^^^^
+  File ""C:\Python312\Lib\random.py"", line 347, in choice
+    raise IndexError('Cannot choose from an empty sequence')
+",local
+12,object of type 'NoneType' has no len(),"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 194, in query_and_preserve_use
+    trip_id = self.random_from_list(trip_ids)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 30, in random_from_list
+    return random.choice(l)
+           ^^^^^^^^^^^^^^^^
+  File ""C:\Python312\Lib\random.py"", line 346, in choice
+    if not len(seq):
+           ^^^^^^^^
+",local
+1,Expecting value: line 1 column 1 (char 0),"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 235, in query_and_preserve_use
+    print(res.json())
+          ^^^^^^^^^^
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\requests\models.py"", line 978, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+",local

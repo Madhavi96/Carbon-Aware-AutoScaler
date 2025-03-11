@@ -1,0 +1,195 @@
+Count,Message,Traceback,Nodes
+6,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 341, in query_food_use
+    headers[""Authorization""] = ""Bearer "" + token
+                        ~~~~~~~~~~^~~~~~~
+",local
+8,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 128, in query_advanced_ticket_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+3,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 265, in query_and_cancel_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+5,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 278, in query_and_collect_ticket_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+3,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 413, in query_travel_left_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+3,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 249, in query_admin_basic_price_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+2,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 395, in query_travel_left_parallel_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+3,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 357, in query_order_and_pay_use
+    headers[""Authorization""] = ""Bearer "" + token
+                 ~~~~~~~~~~^~~~~~~
+",local
+2,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 112, in query_admin_basic_config_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+1,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 323, in query_and_rebook_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+1,"can only concatenate str (not ""NoneType"") to str","  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 153, in query_and_preserve_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+9,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 363, in query_order_and_pay_use
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+1,object of type 'NoneType' has no len(),"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 194, in query_and_preserve_use
+    trip_id = self.random_from_list(trip_ids)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 30, in random_from_list
+    return random.choice(l)
+           ^^^^^^^^^^^^^^^^
+  File ""C:\Python312\Lib\random.py"", line 346, in choice
+    if not len(seq):
+           ^^^^^^^^
+",local
+13,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 279, in query_and_collect_ticket_use
+    self.query_and_collect_ticket(headers=headers)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 921, in query_and_collect_ticket
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+14,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 309, in query_and_put_consign_use
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+10,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 291, in query_and_enter_station_use
+    self.query_and_enter_station(headers=headers)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 939, in query_and_enter_station
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+9,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 326, in query_and_rebook_use
+    self.query_and_rebook(headers=headers)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 975, in query_and_rebook
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+11,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 340, in run
+    self.execute_next_task()
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\myenv\Lib\site-packages\locust\user\task.py"", line 385, in execute_task
+    task(self)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 268, in query_and_cancel_use
+    self.query_one_and_cancel(headers=headers,uuid=self.uuid,)
+  File ""C:\Users\HP\Documents\DIE\cpouta\evaluation\load_generator_train.py"", line 901, in query_one_and_cancel
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local

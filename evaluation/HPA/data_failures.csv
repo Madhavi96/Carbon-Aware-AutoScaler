@@ -1,0 +1,17 @@
+Method,Name,Error,Occurrences
+POST,/api/v1/orderservice/order/refresh,HTTPError('502 Server Error: Bad Gateway for url: /api/v1/orderservice/order/refresh'),177
+POST,/api/v1/travelservice/trips/left,HTTPError('500 Server Error:  for url: /api/v1/travelservice/trips/left'),11
+POST,/api/v1/preserveservice/preserve,HTTPError('504 Server Error: Gateway Time-out for url: /api/v1/preserveservice/preserve'),1
+POST,/api/v1/travelservice/trips/left_parallel,HTTPError('405 Client Error:  for url: /api/v1/travelservice/trips/left_parallel'),1301
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('500 Server Error:  for url: /api/v1/orderOtherService/orderOther/refresh'),3678
+POST,/api/v1/preserveotherservice/preserveOther,HTTPError('500 Server Error:  for url: /api/v1/preserveotherservice/preserveOther'),53
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('504 Server Error: Gateway Time-out for url: /api/v1/orderOtherService/orderOther/refresh'),37
+POST,/api/v1/travelservice/trips/left,HTTPError('502 Server Error: Bad Gateway for url: /api/v1/travelservice/trips/left'),1
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('504 Server Error: Gateway Time-out for url: /api/v1/travelplanservice/travelPlan/quickest'),5
+GET,/api/v1/routeservice/routes/92708982-77af-4318-be25-57ccb0ff69ad,HTTPError('404 Client Error: Not Found for url: /api/v1/routeservice/routes/92708982-77af-4318-be25-57ccb0ff69ad'),1350
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('502 Server Error: Bad Gateway for url: /api/v1/orderOtherService/orderOther/refresh'),17
+POST,/api/v1/orderservice/order/refresh,HTTPError('504 Server Error: Gateway Time-out for url: /api/v1/orderservice/order/refresh'),83
+POST,/api/v1/preserveservice/preserve,HTTPError('500 Server Error:  for url: /api/v1/preserveservice/preserve'),47
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('500 Server Error:  for url: /api/v1/travelplanservice/travelPlan/quickest'),23
+POST,/api/v1/orderservice/order/refresh,HTTPError('500 Server Error:  for url: /api/v1/orderservice/order/refresh'),3557
+POST,/api/v1/travel2service/trips/left,HTTPError('500 Server Error:  for url: /api/v1/travel2service/trips/left'),1
