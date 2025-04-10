@@ -1,4 +1,4 @@
-DeepScaler/dataForPredict/
+# DeepScaler/dataForPredict/
 DeepScaler/dataForTraining/
 DeepScaler/dataForPredictOld/
 DeepScaler/model/
@@ -12,5 +12,3 @@ screenlog.0
 evaluation/
 metrics_data.csv
 DeepScaler/cpu.bash
-evaluation/
-
