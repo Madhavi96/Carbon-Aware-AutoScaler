@@ -11,16 +11,17 @@ from torch.utils.data import DataLoader
 from utils import scaler
 from models import AdapGL
 from dataset import TPDataset2
-from metrics_fetch import save_all_fetch_data
+from metrics_fetch import save_all_fetch_data, fetch_cpu_usage_for_hpa, fetch_pods
 from prepareData import predict_read_and_generate_dataset
 from k8sop import K8sOp
 
+from codecarbon import EmissionsTracker  # Codecarbon
+tracker = EmissionsTracker() # Init tracker
 
 def load_config(data_path):
     """Load configuration from a YAML file."""
     with open(data_path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
-
 
 def fetch_metrics_data(services, metrics, start_time_str, current_time_str):
     """Fetch and process metric data for all services."""
@@ -87,21 +88,64 @@ def predict_scaling(xx, model_config_path, train_config_path, model_name):
         raise ValueError(f'Model {model_name} is not valid!')
 
     net_pred = Model(**model_config[model_name], **data_config).to(device)
-    net_pred.load_state_dict(torch.load('/home/ubuntu/carbon-aware-autoscaler/DeepScaler/model/AdapGLA_1.pkl'))  # Load trained model
-
-    adj = np.load('/home/ubuntu/carbon-aware-autoscaler/DeepScaler/model/AdapGLA_1/best_adj_mx.npy')
+    net_pred.load_state_dict(torch.load(args.model_save_path))  # Load trained model
+    best_adj_path = os.path.join(os.path.dirname(args.model_save_path), "best_adj_mx.npy")
+    adj = np.load(best_adj_path)
     torch_adj = torch.from_numpy(adj)
     data_tensor = torch.from_numpy(data_loader.dataset.data['x'])
+    # print(f'Data Tensor: {data_tensor}')
+    # print(f'Adj Data: {torch_adj}')
+    
+    # print(f'Model: {net_pred}')
+
+
     pred = net_pred(data_tensor, torch_adj).detach()
+    # print(pred)
     pred = data_scaler.inverse_transform(data=pred, axis=0)
+    print(pred.shape)
     print(pred)
     return pred
 
+def determine_scaling_for_hpa(services_to_scale):
+    target_cpu_utilization = 60
+    pods_num_to_scale = {}
+    
+    for svc_name in services_to_scale:
+        print(f"Service : {svc_name}")
 
-def determine_scaling(pred, services, restriction=0.5):
+        current_cpu = fetch_cpu_usage_for_hpa(svc_name)
+        current_pod_count = fetch_pods(svc_name)
+      
+        print(f"Current CPU: {current_cpu}")
+        print(f"Current PODS: {current_pod_count}")
+        # Calculate target pod count using HPA formula
+        target_pod_count = math.ceil((current_cpu * current_pod_count) / target_cpu_utilization)
+        print(f"Target PODS: {target_pod_count}")
+
+        if target_pod_count > 10:
+            continue
+    
+        pods_num_to_scale[svc_name] = target_pod_count if target_pod_count > 0 else 1 
+        
+    return pods_num_to_scale
+    
+def determine_services_to_scale(pred, services, threshold):
+    services_to_scale = []
+    
+    for idx, service in enumerate(services):
+        service_value = pred[-1, 0, idx]
+        service_value = 1 if math.isnan(service_value) else service_value
+        
+        if service_value >= threshold:
+            services_to_scale.append(service)
+        
+    return services_to_scale
+    
+
+def determine_scaling(pred, services, restriction=0.35):
     """Determine the number of pods to scale for each service."""
     pods_num_to_scale = {}
-
+    # pred = pred[0]
     for idx, service in enumerate(services):
         service_value = pred[-1, 0, idx]
         service_value = 1 if math.isnan(service_value) else service_value
@@ -133,51 +177,98 @@ def main(args):
     'ts-ticket-office-mongo', 'ts-ticket-office-service', 'ts-ticketinfo-service', 'ts-train-mongo', 'ts-train-service',
     'ts-travel-mongo', 'ts-travel-plan-service', 'ts-travel-service', 'ts-travel2-mongo', 'ts-travel2-service',
     'ts-ui-dashboard', 'ts-user-mongo', 'ts-user-service', 'ts-verification-code-service', 'ts-voucher-mysql', 'ts-voucher-service']
-    metrics = ["pod", "vCPU", "cpu", "mem_", "mem", "energy_idle", "energy_dynamic", "throttled_cpu"]
+    metrics = ["pod", "vCPU", "cpu", "mem_", "mem","res","req"]
+    # metrics = ["pod", "vCPU", "cpu", "mem_", "mem", "energy_idle", "energy_dynamic", "throttled_cpu"]
+    # metrics = ["pod", "cpu", "mem", "res", "req"]
+
     c_temp = 0
     prev_data = None
 
-    while True:
-        start_time = time.time()
+    scale_up_time_tracker = {}  # Tracks the last time a service was scaled up
+    cooldown_period = datetime.timedelta(minutes=2)
+    max_pods = 8
 
-        current_time = datetime.datetime.now()
-        current_time_str = current_time.strftime('%Y-%m-%d %H:%M:%S')
-        start_time_str = (
-            (current_time - datetime.timedelta(hours=1, minutes=21)).strftime('%Y-%m-%d %H:%M:%S')
-            if c_temp == 0 else
-            (current_time - datetime.timedelta(minutes=1)).strftime('%Y-%m-%d %H:%M:%S')
-        )
 
-        # Fetch and process metric data
-        metric_data = fetch_metrics_data(services, metrics, start_time_str, current_time_str)
+    try:
+        while True:
+            start_time = time.time()
 
-        # Prepare input tensor
-        xx = prepare_input_tensor(metric_data, services, metrics, prev_data)
-        np.savez("./data/predict_scale", xx)
-        print("xx")
-        print(xx.shape)
+            current_time = datetime.datetime.now()
+            current_time_str = current_time.strftime('%Y-%m-%d %H:%M:%S')
+            start_time_str = (
+                (current_time - datetime.timedelta(hours=0, minutes=13)).strftime('%Y-%m-%d %H:%M:%S')
+                if c_temp == 0 else
+                (current_time - datetime.timedelta(minutes=1)).strftime('%Y-%m-%d %H:%M:%S')
+            )
 
-        # Generate dataset and predict scaling
-        predict_read_and_generate_dataset('./data/predict_scale.npz', num_of_hours=1, num_for_predict=1, points_per_hour=80, save=True)
-        pred = predict_scaling(xx, args.model_config_path, args.train_config_path, args.model_name)
-        print(pred)
-        print(pred.shape)
-        print("PREZA")
-        # Determine and apply scaling
-        pods_num_to_scale = determine_scaling(pred, services)
+            # Fetch and process metric data
+            metric_data = fetch_metrics_data(services, metrics, start_time_str, current_time_str)
 
-        for svc, num_pods in pods_num_to_scale.items():
-            k8s_op.scale_deployment_by_replicas(svc, "default", num_pods)
+            # Prepare input tensor
+            xx = prepare_input_tensor(metric_data, services, metrics, prev_data)
+            np.savez("./data/predict_scale", xx)
+            print("xx")
+            print(xx.shape)
 
-        print("After scaling:", pods_num_to_scale)
+            # Generate dataset and predict scaling
+            predict_read_and_generate_dataset('./data/predict_scale.npz', num_of_hours=1, num_for_predict=1, points_per_hour=12, save=True)
+            pred = predict_scaling(xx, args.model_config_path, args.train_config_path, args.model_name)
 
-        # Manage sleep time to maintain loop timing
-        elapsed_time = time.time() - start_time
-        sleep_time = max(0, 55 - elapsed_time)
-        time.sleep(sleep_time)
+            # Determine and apply scaling
+            # pods_num_to_scale = determine_scaling(pred, services)
+            # services_to_scale = determine_services_to_scale(pred, services, threshold=1.8)
+            # pods_num_to_scale = determine_scaling_for_hpa(services_to_scale)
+            
+            pods_num_to_scale = determine_scaling(pred, services)
 
-        c_temp += 1
-        prev_data = xx
+            
+            #for svc, num_pods in pods_num_to_scale.items():
+            #    k8s_op.scale_deployment_by_replicas(svc, "default", num_pods)
+            for svc, desired_pods in pods_num_to_scale.items():
+                desired_pods = min(desired_pods, max_pods)  # Rule 1: Cap pod count at 8
+                current_pods = fetch_pods(svc)
+
+                # Only attempt scaling if current pods do not equal desired pods
+                if current_pods == desired_pods:
+                    # print(f"[No Change] {svc} remains at {current_pods} pods.")
+                    continue
+
+                now = datetime.datetime.now()
+                last_scaled_up_time = scale_up_time_tracker.get(svc)
+
+                if desired_pods > current_pods:
+                    # Scaling up: record the time and apply new replica count
+                    scale_up_time_tracker[svc] = now
+                    k8s_op.scale_deployment_by_replicas(svc, "default", desired_pods)
+                    print(f"[Scale Up] {svc} scaled from {current_pods} to {desired_pods} pods.")
+                elif desired_pods < current_pods:
+                    # Scaling down: enforce cooldown period of 2 minutes since last scale-up
+                    if not last_scaled_up_time or (now - last_scaled_up_time) >= cooldown_period:
+                        k8s_op.scale_deployment_by_replicas(svc, "default", desired_pods)
+                        print(f"[Scale Down] {svc} scaled from {current_pods} to {desired_pods} pods.")
+                    else:
+                        print(f"[Cooldown] Skipping scale down for {svc} due to cooldown (last scale-up at {last_scaled_up_time}).")
+
+
+            print("After scaling:", pods_num_to_scale)
+
+            # Manage sleep time to maintain loop timing
+            elapsed_time = time.time() - start_time
+            sleep_time = max(0, 55 - elapsed_time)
+            time.sleep(sleep_time)
+
+            c_temp += 1
+            prev_data = xx
+            
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        # Stop emissions tracking when the program exits
+        # tracker.stop()
+        # print(f"Stopped the carbon emission tracker")
+        print(f"Prediciton process ended!")
+
+    
 
 
 
@@ -188,7 +279,7 @@ if __name__ == '__main__':
     parser.add_argument('--model_name', type=str, default='AdapGLA', help='Model name to train')
     parser.add_argument('--num_epoch', type=int, default=5, help='Training times per epoch')
     parser.add_argument('--num_iter', type=int, default=5, help='Maximum value for iteration')
-    parser.add_argument('--model_save_path', type=str, default='/home/ubuntu/carbon-aware-autoscaler/DeepScaler/model/AdapGLA_1.pkl', help='Model save path')
+    parser.add_argument('--model_save_path', type=str, default='/home/ubuntu/carbon-aware-autoscaler/DeepScaler/model/AdapGLA_1/AdapGLA_1.pkl', help='Model save path')
     parser.add_argument('--max_graph_num', type=int, default=3, help='Volume of adjacency matrix set')
 
     args = parser.parse_args()

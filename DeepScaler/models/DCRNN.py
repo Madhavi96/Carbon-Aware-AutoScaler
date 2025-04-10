@@ -67,8 +67,9 @@ class DCGRUCell(torch.nn.Module):
         if self.use_gc:
             h = self._gconv(adj_mx_list, h)
         h = torch.sigmoid(self.gate_weight(h))
-        r, z = torch.split(tensor=h, split_size_or_sections=self.h_size, dim=-1)
 
+        r, z = torch.split(tensor=h, split_size_or_sections=self.h_size, dim=-1)
+        
         c = torch.cat((x, r * hx), dim=-1)
         if self.use_gc:
             c = self._gconv(adj_mx_list, c)
@@ -125,6 +126,10 @@ class GeneralDCRNN(torch.nn.Module):
         self.activation = kwargs.get('activation', 'tanh')
         device_name = kwargs.get('device', 'cuda:0')
         self.device = torch.device(device_name if torch.cuda.is_available() else 'cpu')
+        # manually added below line
+        self.training = False
+        
+        print(f"device : {self.device}")
 
         K = kwargs.get('K', 3)
         graph_num = kwargs.get('graph_num', 2)
@@ -170,6 +175,7 @@ class GeneralDCRNN(torch.nn.Module):
 
         h_size = [self.rnn_layer_num] + list(x.size()[1: -1]) + [self.rnn_hidden_size]
         hx = torch.zeros(h_size, dtype=torch.float32, device=self.device)
+       
 
         for t in range(x.size(0)):
             _, hx = self.encoder_layer(x[t], hx, adj_mx_list)
@@ -197,7 +203,7 @@ class GeneralDCRNN(torch.nn.Module):
         """
         x_size = list(hx.size()[1: -1]) + [self.output_size]
         x = torch.zeros(x_size, dtype=torch.float32, device=self.device)
-
+        
         if labels is not None:
             labels = labels.unsqueeze(dim=-1)
             if self.step_num_out > 1 and self.batch_first:
@@ -206,10 +212,14 @@ class GeneralDCRNN(torch.nn.Module):
                 labels = labels.unsqueeze(dim=0)
 
         y = []
+        
         for t in range(self.step_num_out):
             x, hx = self.decoder_layer(x, hx, adj_mx_list)
+
             x = self.fc_layers[t](x)
+            
             y.append(x)
+            # if self.training and self.use_curriculum_lr:
             if self.training and self.use_curriculum_lr:
                 c = np.random.uniform(0, 1)
                 if c < self._compute_sampling_threshold(batches_seen):

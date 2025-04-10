@@ -6,29 +6,109 @@ import datetime
 import time
 import pandas as pd
 import numpy as np
+import subprocess
+import json
+import re
+
 template = {
     "vCPU": "sum(rate(container_cpu_usage_seconds_total{{namespace='{0}',pod=~'{1}'}}[1m]))",
     "cpu":"sum(irate(container_cpu_usage_seconds_total{{pod=~'{1}',namespace=~'{0}'}}[1m]))/sum(container_spec_cpu_quota{{pod=~'{1}',namespace=~'{0}'}}/container_spec_cpu_period{{pod=~'{1}',namespace=~'{0}'}})",
     "mem": "sum(container_memory_usage_bytes{{namespace='{0}',pod=~'{1}'}}) / sum(container_spec_memory_limit_bytes{{namespace=~'{0}',pod=~'{1}'}})",
     "mem_": "sum(container_memory_usage_bytes{{namespace='{0}',pod=~'{1}'}})",
-    # "res": "sum(rate(istio_request_duration_milliseconds_sum{{reporter='destination',destination_workload_namespace='{0}',destination_workload=~'{1}'}}[{2}]))/sum(rate(istio_request_duration_milliseconds_count{{reporter='destination',destination_workload_namespace='{0}',destination_workload=~'{1}'}}[{2}]))/1000",
-    # "req": "sum(rate(istio_requests_total{{destination_workload_namespace='{0}',destination_workload=~'{1}'}}[{2}]))",
+    "res": "sum(rate(istio_request_duration_milliseconds_sum{{reporter='destination',destination_workload_namespace='{0}',destination_app=~'{1}'}}[{2}]))/sum(rate(istio_request_duration_milliseconds_count{{reporter='destination',destination_workload_namespace='{0}',destination_app=~'{1}'}}[{2}]))/1000",
+    "req": "sum(rate(istio_requests_total{{destination_workload_namespace='{0}',destination_app=~'{1}'}}[{2}]))",
     "pod": "count(container_spec_cpu_period{{namespace='{0}',pod=~'{1}'}})",
-    "energy_idle":"kepler_container_joules_total{{namespace='monitoring', container_name=~'{1}', mode='idle'}}",
-    "energy_dynamic":"kepler_container_joules_total{{namespace='monitoring', container_name=~'{1}', mode='dynamic'}}",
+    # "energy_idle":"kepler_container_joules_total{{namespace='monitoring', container_name=~'{1}', mode='idle'}}",
+    # "energy_dynamic":"kepler_container_joules_total{{namespace='monitoring', container_name=~'{1}', mode='dynamic'}}",
     # "energy": "sum(kepler_container_joules_total{{namespace='monitoring', pod_name=~'{1}'}}) by (pod_name)"
-    "throttled_cpu": "sum(rate(container_cpu_cfs_throttled_periods_total{{namespace='{0}',pod=~'{1}'}}[1m]))"
-
+    # "throttled_cpu": "sum(rate(container_cpu_cfs_throttled_periods_total{{namespace='{0}',pod=~'{1}'}}[1m]))"
 }
 prefix_api = "http://localhost:9090/api/v1/query?query="
+prefix_api_istio = "http://localhost:9091/api/v1/query?query="
 namespace = 'default'
 interval = 120
 services = ["adservice", "cartservice", "checkoutservice","currencyservice","emailservice","frontend","paymentservice","productcatalogservice","recommendationservice","shippingservice"]
 
 
-metrics = ["pod", "vCPU", "cpu", "mem_", "mem", "energy_idle", "energy_dynamic", "throttled_cpu"]
+metrics = ["pod", "vCPU", "cpu", "mem_", "mem","res","req"]
+
+# metrics = ["pod", "vCPU", "cpu", "mem_", "mem", "energy_idle", "energy_dynamic", "throttled_cpu"]
+# metrics = ["pod", "cpu", "mem", "res", "req"]
 
 training_root_dir = ''
+
+def fetch_cpu_usage_for_hpa(service_name):
+    try:
+        # Fetch specific pod that matches the service name pattern
+        pod_list_cmd = subprocess.run([
+            "kubectl", "get", "pods", "-o", "jsonpath={.items[*].metadata.name}"
+        ], capture_output=True, text=True, check=True)
+        pod_names = pod_list_cmd.stdout.strip().split()
+        
+        # Find the first matching pod
+        service_pattern = re.compile(f"^{re.escape(service_name)}")
+        pod_name = next((pod for pod in pod_names if service_pattern.match(pod)), None)
+        
+        if not pod_name:
+            print("No matching pod found.")
+            return []
+        
+        # Fetch pod details in JSON format
+        pod_json = subprocess.run([
+            "kubectl", "get", "pod", pod_name, "-o", "json"
+        ], capture_output=True, text=True, check=True).stdout
+        pod = json.loads(pod_json)
+        
+        results = []
+        containers = pod.get("spec", {}).get("containers", [])
+
+        for container in containers:
+            container_name = container["name"]
+            
+            # Filter by container name matching service name
+            if container_name != service_name:
+                continue
+            
+            cpu_request = container.get("resources", {}).get("requests", {}).get("cpu", "none")
+            
+            # Convert CPU request to millicores
+            if cpu_request == "none":
+                cpu_request = 0
+            elif cpu_request.endswith("m"):
+                cpu_request = int(cpu_request.rstrip("m"))
+            else:
+                cpu_request = int(float(cpu_request) * 1000)
+            
+            # Fetch CPU usage using kubectl top pod
+            cpu_usage_cmd = subprocess.run([
+                "kubectl", "top", "pod", pod_name, "--no-headers"
+            ], capture_output=True, text=True)
+            
+            cpu_usage = 0
+            if cpu_usage_cmd.returncode == 0:
+                output = cpu_usage_cmd.stdout.strip().split()
+                if len(output) > 1:
+                    cpu_usage = int(output[1].rstrip("m"))
+            print(f"CPU REQ: {cpu_request}")
+            print(f"CPU USAGE: {cpu_usage}")
+            # Calculate CPU utilization percentage
+            utilization = (cpu_usage / cpu_request * 100) if cpu_request > 0 and cpu_usage > 0 else 0
+            print(f"CPU UTILIZATION: {utilization}")
+            
+            # Append results
+            results.append({
+                "pod": pod_name,
+                "container": container_name,
+                "cpu_request": cpu_request,
+                "cpu_usage": cpu_usage,
+                "utilization": round(utilization, 2)
+            })
+        
+        return results[0]['utilization']
+    
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing command: {e}")
+        return []
 
 def fetch_cpu_usage(svc_name, namespace=namespace, interval=30):
     cpu_api = template["cpu"].format(namespace, svc_name, str(interval)+'s')
@@ -84,7 +164,8 @@ def fetch_prior_req(svc_name, namespace=namespace, interval=30, delta=30):
 
 
 def fetch_pods(svc_name, namespace=namespace):
-    pod_api = template["pod"].format(namespace, svc_name)
+    # pod_api = template["pod"].format(namespace, svc_name)
+    pod_api = template["pod"].format(namespace, f"{svc_name}.*")#mode为pod，
     url = prefix_api + urllib.parse.quote_plus(pod_api)
     #pod = requests.get(url).json()
     pod = requests.get(url).json()["data"]
@@ -97,12 +178,16 @@ def fetch_pods(svc_name, namespace=namespace):
 
 def save_fetch_data(svc_name, mode, start_time, latsted_time, interval, save_file):
     api_str = template[mode].format(namespace, f"{svc_name}.*", str(interval)+'s')#mode为pod，
+    if mode in ["res", "req"]:
+        api_url = prefix_api_istio
+    else:
+        api_url = prefix_api
     # start_time = datetime.datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S')
     with open(save_file, 'w') as f:
         for i in range(0, latsted_time, int(interval)):#以interval为间隔
             t = start_time + datetime.timedelta(seconds=i)#加时间
             unixtime = time.mktime(t.timetuple())#返回用秒数来表示时间的浮点数。
-            url = prefix_api + urllib.parse.quote_plus(api_str) + "&time=" + str(unixtime)
+            url = api_url + urllib.parse.quote_plus(api_str) + "&time=" + str(unixtime)
             res = requests.get(url).json()["data"]
             if "result" in res and len(res["result"]) > 0 and "value" in res["result"][0]:
                 v = res["result"][0]["value"]
@@ -164,11 +249,12 @@ def load_processed_fetch_data(iternums=[1, 2], root_dir=training_root_dir, metri
     data_df['pod'] = data_df['pod'].astype(int)
     return data_df
 
+
 if __name__ == '__main__':
  
     times = [
         ('2023-03-04 04:09:01', '2023-03-04 05:25:15')
 
     ]#
-    save_all_fetch_data(times, 1, root_dir='/ssj/ssj/boutiquessj/pyboutique/newData/slohpa/', interval=30, services=services)#interval 间隔
+    save_all_fetch_data(times, 1, root_dir='./dataForTraining/', interval=60, services=services)#interval 间隔
     print("ok")

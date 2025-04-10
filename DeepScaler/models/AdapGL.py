@@ -257,7 +257,6 @@ class AdapGLA(torch.nn.Module):
     """
     def __init__(self, **kwargs):
         super(AdapGLA, self).__init__()
-
         num_block = kwargs.get('num_block', 2)
         num_nodes = kwargs.get('num_nodes', None)
         c_in = kwargs.get('step_num_in', 12)
@@ -269,6 +268,10 @@ class AdapGLA(torch.nn.Module):
         conv_type = kwargs.get('conv_type', 'gcn')
         K = kwargs.get('K', 1)
 
+        print("cout")
+        print(c_in)
+        print(c_out)
+        
         activation = kwargs.get('activation', 'relu')
         activation = getattr(torch, activation)
 
@@ -295,6 +298,7 @@ class AdapGLA(torch.nn.Module):
 
 class AdapGLD(GeneralDCRNN):
     def __init__(self, **kwargs):
+        print("INITIALIZED")
         super(AdapGLD, self).__init__(**kwargs)
 
     def forward(self, x, adj_mx, labels=None, batches_seen=None):

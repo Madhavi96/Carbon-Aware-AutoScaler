@@ -1,10 +1,10 @@
 # 数据集
 dataset:
   data_dir: data/
-  step_num_in: 80
+  step_num_in: 12
   step_num_out: 1
   num_nodes: 63
-  input_size: 8
+  input_size: 7
   batch_size: 64
   device: cpu
 
@@ -24,7 +24,7 @@ AdapGLA:
   num_time_filter: 128
   conv_type: cheb
   K: 3
-  init_feature_num: 8
+  init_feature_num: 7
   adj_mx_path: data/adjacency_matrix.npy
 
 # AdapGLA:
@@ -47,8 +47,8 @@ AdapGLD:
   use_curriculum_learning: True
   cl_decay_steps: 2000
   activation: tanh
-  adj_mx_path: data/random_float_matrix.npy
-  init_feature_num: 64
+  adj_mx_path: data/adjacency_matrix.npy
+  init_feature_num: 7
 
 AdapGLT:
   K: 3
@@ -60,4 +60,4 @@ AdapGLT:
   num_block: 2
   num_cheb_filter: 128
   init_feature_num: 64
-  adj_mx_path: data/dataset/adj_mx_distance.npy,data/dataset_s/adj_mx_corr.npy
+  adj_mx_path: data/adjacency_matrix.npy

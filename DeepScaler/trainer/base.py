@@ -57,6 +57,13 @@ class TFTrainer(Trainer):
 
             # evaluate
             print('Epoch {}'.format(epoch), end='  ')
+            
+            print("Training Results: \n")
+            
+            train_loss, _, _ = self.evaluate(train_data_loader, metrics)
+            
+            print("Validation Results: \n")
+
             eval_loss, _, _ = self.evaluate(eval_data_loader, metrics)
 
             # Criteria for early stopping

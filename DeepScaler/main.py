@@ -9,16 +9,17 @@ from models import AdapGL
 from dataset import TPDataset
 from torch.utils.data import DataLoader
 
-
+from codecarbon import EmissionsTracker  # Codecarbon
+tracker = EmissionsTracker() # Init tracker
 def load_config(data_path):
     with open(data_path, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
     return config
 
-
 def main(args):
     model_config = load_config(args.model_config_path)
     train_config = load_config(args.train_config_path)
+    print(f'Train Config: {model_config}')
     torch.manual_seed(train_config['seed'])
     torch.cuda.manual_seed(train_config['seed'])
     # ----------------------- Load data ------------------------
@@ -27,11 +28,11 @@ def main(args):
 
     data_config = model_config['dataset']
     device = torch.device(data_config['device'])
-    data_names = ('final_train.npz', 'final_valid.npz', 'final_valid.npz')
+    data_names = ('hpa_2m_train.npz', 'hpa_2m_valid.npz', 'hpa_2m_valid.npz')
     data_loaders = []
     for data_name in data_names:
         dataset = TPDataset(os.path.join(data_config['data_dir'], data_name))
-        if data_name == 'final_train.npz':
+        if data_name == 'hpa_2m_train.npz':
             data_scaler.fit(dataset.data['x'])
         dataset.fit(data_scaler)
         data_loader = DataLoader(dataset, batch_size=data_config['batch_size'])
@@ -74,17 +75,23 @@ def main(args):
     net_trainer.test(data_loaders[-1])
 
 if __name__ == '__main__':
+    
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_config_path', type=str, default='./config/train_dataset_speed.yaml',
                         help='Config path of models')
     parser.add_argument('--train_config_path', type=str, default='./config/train_config.yaml',
                         help='Config path of Trainer')
     parser.add_argument('--model_name', type=str, default='AdapGLA', help='Model name to train')
-    parser.add_argument('--num_epoch', type=int, default=10, help='Training times per epoch')
-    parser.add_argument('--num_iter', type=int, default=1, help='Maximum value for iteration')
-    parser.add_argument('--model_save_path', type=str, default='./model/AdapGLA_1.pkl',
-                        help='Model save path')                 
+    parser.add_argument('--num_epoch', type=int, default=30, help='Training times per epoch')
+    parser.add_argument('--num_iter', type=int, default=5, help='Maximum value for iteration')
+    parser.add_argument('--model_save_path', type=str, default='./model/AdapGLA_1_delete_me.pkl',
+                        help='Model save path')      
+    # parser.add_argument('--model_save_path', type=str, default='./model/AdapGLA_1.pkl',
+    #                 help='Model save path')             
     parser.add_argument('--max_graph_num', type=int, default=3, help='Volume of adjacency matrix set')
     args = parser.parse_args()
-
+    
+    # start the tracker
+    tracker.start()
     main(args)
+    tracker.stop()

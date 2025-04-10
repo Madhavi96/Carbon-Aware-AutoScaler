@@ -1,0 +1,16 @@
+DeepScaler/dataForPredict/
+DeepScaler/dataForTraining/
+DeepScaler/dataForPredictOld/
+DeepScaler/model/
+DeepScaler/data_old/
+Model scripts/
+DeepScaler/__pycache/*
+collect_metrics/
+.myenv/
+README.md
+screenlog.0
+evaluation/
+metrics_data.csv
+DeepScaler/cpu.bash
+evaluation/
+

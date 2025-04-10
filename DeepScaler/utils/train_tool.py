@@ -16,13 +16,15 @@ class EarlyStop:
         finfo = np.finfo(np.float32)
         self.cur_value = finfo.max if self.min_is_best else finfo.min
 
-    def reach_stop_criteria(self, cur_value):
+    def reach_stop_criteria(self, cur_value):        
+        print(f"***************************************")
         if self.min_is_best:
             self.count = self.count + 1 if cur_value >= self.cur_value else 0
         else:
             self.count = self.count + 1 if cur_value <= self.cur_value else 0
         if self.count == self.tol_num:
             return True
+
         self.cur_value = cur_value
         return False
 

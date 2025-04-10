@@ -1,4 +1,3 @@
-kubectl autoscale deployment jaeger --min=1 --max=8
 kubectl autoscale deployment ts-admin-basic-info-service --min=1 --max=8
 kubectl autoscale deployment ts-admin-order-service --min=1 --max=8
 kubectl autoscale deployment ts-admin-route-service --min=1 --max=8
