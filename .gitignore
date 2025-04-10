@@ -1,4 +1,3 @@
-# DeepScaler/dataForPredict/
 DeepScaler/dataForTraining/
 DeepScaler/dataForPredictOld/
 DeepScaler/model/
@@ -9,6 +8,5 @@ collect_metrics/
 .myenv/
 README.md
 screenlog.0
-evaluation/
 metrics_data.csv
 DeepScaler/cpu.bash
