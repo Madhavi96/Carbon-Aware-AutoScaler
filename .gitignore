@@ -4,6 +4,7 @@ DeepScaler/model/
 DeepScaler/data_old/
 Model scripts/
 DeepScaler/__pycache/*
+DeepScaler/__pycache__/*
 collect_metrics/
 .myenv/
 README.md
@@ -11,3 +12,4 @@ screenlog.0
 metrics_data.csv
 DeepScaler/cpu.bash
 DeepScaler/dataForPredict
+*.pyc
