@@ -85,6 +85,55 @@ class ChebConv(torch.nn.Module):
             y = torch.relu(self.w(y))
             outputs.append(y)
         return torch.stack(outputs, dim=1)
+    
+
+
+
+class MultiHeadSelfAttention(torch.nn.Module): #Transformer based Multihead attention
+    """ Compute Temporal attention scores using transformer-based self-attention.
+    
+    Args:
+        num_nodes: Number of vertices.
+        f_in: Number of features.
+        c_in: Number of time steps.
+
+    Shape:
+        - Input: :math:`(batch\_size, c_{in}, num\_nodes, f_{in})`
+        - Output: :math:`(batch\_size, c_in, c_in)`.
+    """
+    def __init__(self, num_nodes, f_in, c_in, d_model=64, num_heads=4):
+        super(MultiHeadSelfAttention, self).__init__()
+
+        self.num_nodes = num_nodes
+        self.f_in = f_in
+        self.c_in = c_in
+        self.d_model = d_model
+
+        # Multi-head self-attention
+        self.self_attention = torch.nn.MultiheadAttention(embed_dim=d_model, num_heads=num_heads, batch_first=True)
+
+        # Linear projection to match input dimensions
+        self.input_projection = torch.nn.Linear(f_in * num_nodes, d_model)
+        self.output_projection = torch.nn.Linear(d_model, c_in)
+
+    def forward(self, x):
+        # Reshape input to (batch_size, c_in, num_nodes * f_in)
+        b, c_in, num_nodes, f_in = x.size()
+        x = x.reshape(b, c_in, -1)  # (batch_size, c_in, num_nodes * f_in)
+
+        # Project input to d_model dimensions
+        x = self.input_projection(x)  # (batch_size, c_in, d_model)
+
+        # Apply multi-head self-attention
+        attn_output, _ = self.self_attention(x, x, x)  # (batch_size, c_in, d_model)
+
+        # Project output back to (batch_size, c_in, c_in)
+        output = self.output_projection(attn_output)  # (batch_size, c_in, c_in)
+
+        # Apply softmax to get attention scores
+        output = F.softmax(output, dim=-1)
+
+        return output
 
 
 class TemporalAttention(torch.nn.Module):
