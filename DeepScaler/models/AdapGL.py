@@ -1,62 +1,99 @@
 import math
 import torch
 from .ASTGCN import TemporalAttention
+from .ASTGCN import MultiHeadSelfAttention
 from .DCRNN import GeneralDCRNN, DCGRULayer
+# class GraphConv(torch.nn.Module):
+#     r"""
+#     Graph Convolution with self feature modeling.
+
+#     Args:
+#         f_in: input size.
+#         num_cheb_filter: output size.
+#         conv_type:
+#             gcn: :math:`AHW`,
+#             cheb: :math:``T_k(A)HW`.
+#         activation: default relu.
+#     """
+#     def __init__(self, f_in, num_cheb_filter, conv_type=None, **kwargs):
+#         super(GraphConv, self).__init__()
+#         self.K = kwargs.get('K', 3) if conv_type == 'cheb' else 1
+#         self.with_self = kwargs.get('with_self', True)
+#         self.w_conv = torch.nn.Linear(f_in * self.K, num_cheb_filter, bias=False)
+#         if self.with_self:
+#             self.w_self = torch.nn.Linear(f_in, num_cheb_filter)
+#         self.conv_type = conv_type
+#         self.activation = kwargs.get('activation', torch.relu)
+
+#     def cheb_conv(self, x, adj_mx):
+#         bs, num_nodes, _ = x.size()
+
+#         if adj_mx.dim() == 3:
+#             h = x.unsqueeze(dim=1)
+#             h = torch.matmul(adj_mx, h).transpose(1, 2).reshape(bs, num_nodes, -1)
+#         else:
+#             h_list = [x, torch.matmul(adj_mx, x)]
+#             for _ in range(2, self.K):
+#                 h_list.append(2 * torch.matmul(adj_mx, h_list[-1]) - h_list[-2])
+#             h = torch.cat(h_list, dim=-1)
+
+#         h = self.w_conv(h)
+#         if self.with_self:
+#             h += self.w_self(x)
+#         if self.activation is not None:
+#             h = self.activation(h)
+#         return h
+
+#     def gcn_conv(self, x, adj_mx):
+#         h = torch.matmul(adj_mx, x)
+#         h = self.w_conv(h)
+#         if self.with_self:
+#             h += self.w_self(x)
+#         if self.activation is not None:
+#             h = self.activation(h)
+#         return h
+
+#     def forward(self, x, adj_mx):
+#         self.conv_func = self.cheb_conv if self.conv_type == 'cheb' else self.gcn_conv#用到切比雪夫
+#         return self.conv_func(x, adj_mx)
 
 
 class GraphConv(torch.nn.Module):
     r"""
-    Graph Convolution with self feature modeling.
+    GraphSAGE-style Graph Convolution
 
     Args:
         f_in: input size.
         num_cheb_filter: output size.
-        conv_type:
-            gcn: :math:`AHW`,
-            cheb: :math:``T_k(A)HW`.
+        conv_type: kept for compatibility, not used here.
         activation: default relu.
     """
     def __init__(self, f_in, num_cheb_filter, conv_type=None, **kwargs):
         super(GraphConv, self).__init__()
-        self.K = kwargs.get('K', 3) if conv_type == 'cheb' else 1
         self.with_self = kwargs.get('with_self', True)
-        self.w_conv = torch.nn.Linear(f_in * self.K, num_cheb_filter, bias=False)
-        if self.with_self:
-            self.w_self = torch.nn.Linear(f_in, num_cheb_filter)
-        self.conv_type = conv_type
         self.activation = kwargs.get('activation', torch.relu)
 
-    def cheb_conv(self, x, adj_mx):
-        bs, num_nodes, _ = x.size()
-
-        if adj_mx.dim() == 3:
-            h = x.unsqueeze(dim=1)
-            h = torch.matmul(adj_mx, h).transpose(1, 2).reshape(bs, num_nodes, -1)
-        else:
-            h_list = [x, torch.matmul(adj_mx, x)]
-            for _ in range(2, self.K):
-                h_list.append(2 * torch.matmul(adj_mx, h_list[-1]) - h_list[-2])
-            h = torch.cat(h_list, dim=-1)
-
-        h = self.w_conv(h)
-        if self.with_self:
-            h += self.w_self(x)
-        if self.activation is not None:
-            h = self.activation(h)
-        return h
-
-    def gcn_conv(self, x, adj_mx):
-        h = torch.matmul(adj_mx, x)
-        h = self.w_conv(h)
-        if self.with_self:
-            h += self.w_self(x)
-        if self.activation is not None:
-            h = self.activation(h)
-        return h
+        in_dim = f_in * 2 if self.with_self else f_in
+        self.linear = torch.nn.Linear(in_dim, num_cheb_filter)
+        self.conv_type = conv_type  # for compatibility
 
     def forward(self, x, adj_mx):
-        self.conv_func = self.cheb_conv if self.conv_type == 'cheb' else self.gcn_conv#用到切比雪夫
-        return self.conv_func(x, adj_mx)
+        # x: [B, N, F], adj_mx: [N, N] or [B, N, N]
+        if adj_mx.dim() == 2:
+            adj_mx = adj_mx.unsqueeze(0).expand(x.size(0), -1, -1)  # [B, N, N]
+
+        agg = torch.bmm(adj_mx, x)  # [B, N, F]
+
+        if self.with_self:
+            h = torch.cat([x, agg], dim=-1)
+        else:
+            h = agg
+
+        h = self.linear(h)
+
+        if self.activation is not None:
+            h = self.activation(h)
+        return h
 
 
 class GraphLearn(torch.nn.Module):
@@ -192,12 +229,10 @@ class AdapGLBlockT(torch.nn.Module):
 
         return h
 
-
 class AdapGLBlockA(torch.nn.Module):###用到这里了
     def __init__(self, c_in, f_in, num_nodes, num_cheb_filter, num_time_filter, kernel_size,
                  conv_type, K=3):
         super(AdapGLBlockA, self).__init__()
-
         self.padding = (kernel_size - 1) // 2
         self.graph_conv_p = GraphConv(f_in, num_cheb_filter // 2, conv_type=conv_type,
                                       K=K, activation=None, with_self=False)
@@ -222,7 +257,6 @@ class AdapGLBlockA(torch.nn.Module):###用到这里了
     #先进行时间层面的注意力评分得到序列x
     #将其带入图卷积的操作去前向传播
     #然后再进行时间层面的传播、残差传播、得到h隐藏层
-    #
     def forward(self, x, adj_mx):
         b, c, n_d, f = x.size()
 
