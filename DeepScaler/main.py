@@ -8,9 +8,10 @@ from utils import scaler
 from models import AdapGL
 from dataset import TPDataset
 from torch.utils.data import DataLoader
-
+from contextlib import redirect_stdout
+import io
 from codecarbon import EmissionsTracker  # Codecarbon
-tracker = EmissionsTracker() # Init tracker
+
 def load_config(data_path):
     with open(data_path, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
@@ -72,7 +73,17 @@ def main(args):
         args.max_graph_num, data_scaler, args.model_save_path
     )
     net_trainer.train(data_loaders[0], data_loaders[1])
-    net_trainer.test(data_loaders[-1])
+
+    f = io.StringIO()
+    with redirect_stdout(f):
+        net_trainer.test(data_loaders[-1])
+
+    printed_output = f.getvalue()
+    log_file = os.path.join(args.model_save_dir, 'test.log')
+    with open(log_file, 'w') as f:
+        f.write(printed_output)
+    
+    
 
 if __name__ == '__main__':
     
@@ -92,6 +103,19 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     # start the tracker
+    base_name = os.path.splitext(os.path.basename(args.model_save_path))[0]
+    model_save_dir = os.path.join(os.path.dirname(args.model_save_path), base_name)
+
+    args.model_save_dir = model_save_dir
+
+    # Make sure the emissions directory exists
+    os.makedirs(model_save_dir, exist_ok=True)
+    if os.path.exists(os.path.join(model_save_dir,'emissions_training.csv')):
+        os.remove(os.path.join(model_save_dir,'emissions_training.csv'))
+    tracker = EmissionsTracker(
+        output_file=os.path.join(model_save_dir,'emissions_training.csv')
+    ) # Init tracker
+
     tracker.start()
     main(args)
     tracker.stop()

@@ -10,3 +10,4 @@ README.md
 screenlog.0
 metrics_data.csv
 DeepScaler/cpu.bash
+DeepScaler/dataForPredict

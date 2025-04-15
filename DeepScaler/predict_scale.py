@@ -16,7 +16,6 @@ from prepareData import predict_read_and_generate_dataset
 from k8sop import K8sOp
 
 from codecarbon import EmissionsTracker  # Codecarbon
-tracker = EmissionsTracker() # Init tracker
 
 def load_config(data_path):
     """Load configuration from a YAML file."""
@@ -142,7 +141,7 @@ def determine_services_to_scale(pred, services, threshold):
     return services_to_scale
     
 
-def determine_scaling(pred, services, restriction=0.35):
+def determine_scaling(pred, services, restriction=0.4):
     """Determine the number of pods to scale for each service."""
     pods_num_to_scale = {}
     # pred = pred[0]
@@ -161,7 +160,7 @@ def determine_scaling(pred, services, restriction=0.35):
     return pods_num_to_scale
 
 
-def main(args):
+def main(args, tracker):
     """Main function for fetching data, predicting scaling, and adjusting pods."""
     k8s_op = K8sOp()
     services = ['ts-admin-basic-info-service', 'ts-admin-order-service', 'ts-admin-route-service', 'ts-admin-travel-service',
@@ -188,9 +187,10 @@ def main(args):
     cooldown_period = datetime.timedelta(minutes=2)
     max_pods = 8
 
-
+    
     try:
         while True:
+            tracker.start()
             start_time = time.time()
 
             current_time = datetime.datetime.now()
@@ -202,6 +202,7 @@ def main(args):
             )
 
             # Fetch and process metric data
+            
             metric_data = fetch_metrics_data(services, metrics, start_time_str, current_time_str)
 
             # Prepare input tensor
@@ -212,13 +213,15 @@ def main(args):
 
             # Generate dataset and predict scaling
             predict_read_and_generate_dataset('./data/predict_scale.npz', num_of_hours=1, num_for_predict=1, points_per_hour=12, save=True)
+            print("HUE")
             pred = predict_scaling(xx, args.model_config_path, args.train_config_path, args.model_name)
 
             # Determine and apply scaling
             # pods_num_to_scale = determine_scaling(pred, services)
             # services_to_scale = determine_services_to_scale(pred, services, threshold=1.8)
             # pods_num_to_scale = determine_scaling_for_hpa(services_to_scale)
-            
+            if args.model_name=='AdapGLT':
+                pred = pred[0]
             pods_num_to_scale = determine_scaling(pred, services)
 
             
@@ -248,10 +251,9 @@ def main(args):
                         print(f"[Scale Down] {svc} scaled from {current_pods} to {desired_pods} pods.")
                     else:
                         print(f"[Cooldown] Skipping scale down for {svc} due to cooldown (last scale-up at {last_scaled_up_time}).")
-
+            tracker.stop()
 
             print("After scaling:", pods_num_to_scale)
-
             # Manage sleep time to maintain loop timing
             elapsed_time = time.time() - start_time
             sleep_time = max(0, 55 - elapsed_time)
@@ -260,11 +262,13 @@ def main(args):
             c_temp += 1
             prev_data = xx
             
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    except KeyboardInterrupt:
+        print("Training interrupted manually. Stopping tracker...")
+    # except Exception as e:
+    #    print(f"An error occurred: {e}")
     finally:
         # Stop emissions tracking when the program exits
-        # tracker.stop()
+        tracker.stop()
         # print(f"Stopped the carbon emission tracker")
         print(f"Prediciton process ended!")
 
@@ -283,4 +287,15 @@ if __name__ == '__main__':
     parser.add_argument('--max_graph_num', type=int, default=3, help='Volume of adjacency matrix set')
 
     args = parser.parse_args()
-    main(args)
+    # base_name = os.path.splitext(os.path.basename(args.model_save_path))[0]
+    model_save_dir = os.path.dirname(args.model_save_path)
+
+    args.model_save_dir = model_save_dir
+    os.makedirs(model_save_dir, exist_ok=True)
+    if os.path.exists(os.path.join(model_save_dir,'emissions_inference.csv')):
+        os.remove(os.path.join(model_save_dir,'emissions_inference.csv'))
+    tracker = EmissionsTracker(
+        output_file=os.path.join(model_save_dir,'emissions_inference.csv')
+    ) #
+    
+    main(args, tracker)
