@@ -17,7 +17,7 @@ ssh -i /home/ubuntu/DIE-train-ticket-app/train.pem ubuntu@$LOCUST_IP << EOF
       echo "[Locust] Activating Python environment..."
       source .venv/bin/activate
 
-      bash load_test.sh train-ticket/hpa_dataset
+      bash load_test_train.sh train-ticket/hpa_dataset
 EOF
 end_time=$(date)
 python main.py "$start_time" "$end_time" $DATASET_NAME
