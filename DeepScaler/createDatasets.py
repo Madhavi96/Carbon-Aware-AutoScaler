@@ -18,6 +18,8 @@ import numpy as np
 import argparse
 import configparser
 from sklearn.model_selection import train_test_split
+import numpy as np
+import os
 
 
 
@@ -26,8 +28,8 @@ from sklearn.model_selection import train_test_split
 # path_to_metrics_data = '/home/ubuntu/carbon-aware-autoscaler/DeepScaler/data/FEB_metrics_data.csv'
 # path_to_metrics_data = '/home/ubuntu/carbon-aware-autoscaler/DeepScaler/data/original_deepscaler_metrics.csv'
 # path_to_metrics_data = '/home/ubuntu/carbon-aware-autoscaler/collect_metrics/hpa_istio_full_12/metrics_data.csv'
-path_to_metrics_data = '/home/ubuntu/carbon-aware-autoscaler/collect_metrics/hpa_2m/metrics_data.csv'
-path_to_save_npz = '/home/ubuntu/carbon-aware-autoscaler/DeepScaler/data/hpa_2m'
+path_to_metrics_data = '/home/ubuntu/Carbon-Aware-AutoScaler/DeepScaler/data/hpa_long.csv'
+path_to_save_npz = '/home/ubuntu/Carbon-Aware-AutoScaler/DeepScaler/data/hpa_long'
 
 
 # Load the CSV file
@@ -145,7 +147,7 @@ def get_sample_indices(data_sequence,  num_of_hours,
 
     return hour_sample, target
 
-def read_and_generate_dataset(graph_signal_matrix_filename,
+def read_and_generate_dataset2(graph_signal_matrix_filename,
                                                      num_of_hours, num_for_predict,
                                                      points_per_hour=12, save=False):
     '''
@@ -218,8 +220,6 @@ def read_and_generate_dataset(graph_signal_matrix_filename,
                             )
     return all_data
 
-import numpy as np
-import os
 
 def read_and_generate_dataset(graph_signal_matrix_filename,
                               num_of_hours, num_for_predict,

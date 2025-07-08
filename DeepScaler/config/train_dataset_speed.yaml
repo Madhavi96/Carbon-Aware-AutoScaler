@@ -1,6 +1,6 @@
 # 数据集
 dataset:
-  data_dir: data/
+  data_dir: data_train/
   step_num_in: 12
   step_num_out: 1
   num_nodes: 63
