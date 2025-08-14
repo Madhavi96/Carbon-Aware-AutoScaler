@@ -25,7 +25,7 @@ This solution aims to improve the sustainability of cloud-native applications wh
 
 
 ### Evaluation Results
- - Response Time comaprison 
+ - Response Time comparison 
 <img width="450" alt="image" src="https://github.com/user-attachments/assets/59101ffa-82a6-484a-9b20-b699d3039919" />
 
 - Carbon footprint comparison
