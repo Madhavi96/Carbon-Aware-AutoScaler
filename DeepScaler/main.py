@@ -29,11 +29,12 @@ def main(args):
 
     data_config = model_config['dataset']
     device = torch.device(data_config['device'])
-    data_names = ('hpa_2m_train.npz', 'hpa_2m_valid.npz', 'hpa_2m_valid.npz')
+    prefix = args.data
+    data_names = (f'{prefix}_train.npz', f'{prefix}_valid.npz', f'{prefix}_valid.npz')
     data_loaders = []
     for data_name in data_names:
         dataset = TPDataset(os.path.join(data_config['data_dir'], data_name))
-        if data_name == 'hpa_2m_train.npz':
+        if data_name == data_names[0]:
             data_scaler.fit(dataset.data['x'])
         dataset.fit(data_scaler)
         data_loader = DataLoader(dataset, batch_size=data_config['batch_size'])
@@ -90,12 +91,14 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_config_path', type=str, default='./config/train_dataset_speed.yaml',
                         help='Config path of models')
+    parser.add_argument('--data', type=str, required=True,
+                    help='Prefix for the dataset files, e.g., "hpa_long"')
     parser.add_argument('--train_config_path', type=str, default='./config/train_config.yaml',
                         help='Config path of Trainer')
     parser.add_argument('--model_name', type=str, default='AdapGLA', help='Model name to train')
     parser.add_argument('--num_epoch', type=int, default=30, help='Training times per epoch')
     parser.add_argument('--num_iter', type=int, default=5, help='Maximum value for iteration')
-    parser.add_argument('--model_save_path', type=str, default='./model/AdapGLA_1_delete_me.pkl',
+    parser.add_argument('--model_save_path', type=str, default='./model/AdapGLA/AdapGLA.pkl',
                         help='Model save path')      
     # parser.add_argument('--model_save_path', type=str, default='./model/AdapGLA_1.pkl',
     #                 help='Model save path')             
@@ -107,6 +110,7 @@ if __name__ == '__main__':
     model_save_dir = os.path.join(os.path.dirname(args.model_save_path), base_name)
 
     args.model_save_dir = model_save_dir
+    print(f"Save dir name: {model_save_dir}")
 
     # Make sure the emissions directory exists
     os.makedirs(model_save_dir, exist_ok=True)

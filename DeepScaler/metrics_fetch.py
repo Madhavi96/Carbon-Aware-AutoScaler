@@ -1,260 +1,182 @@
-#coding=utf-8
-import urllib.parse
-import requests
-import os
-import datetime
-import time
-import pandas as pd
-import numpy as np
-import subprocess
-import json
-import re
+# coding=utf-8
+import urllib.parse, requests, os, datetime, time, re
+import pandas as pd, numpy as np
 
-template = {
-    "vCPU": "sum(rate(container_cpu_usage_seconds_total{{namespace='{0}',pod=~'{1}'}}[1m]))",
-    "cpu":"sum(irate(container_cpu_usage_seconds_total{{pod=~'{1}',namespace=~'{0}'}}[1m]))/sum(container_spec_cpu_quota{{pod=~'{1}',namespace=~'{0}'}}/container_spec_cpu_period{{pod=~'{1}',namespace=~'{0}'}})",
-    "mem": "sum(container_memory_usage_bytes{{namespace='{0}',pod=~'{1}'}}) / sum(container_spec_memory_limit_bytes{{namespace=~'{0}',pod=~'{1}'}})",
-    "mem_": "sum(container_memory_usage_bytes{{namespace='{0}',pod=~'{1}'}})",
-    "res": "sum(rate(istio_request_duration_milliseconds_sum{{reporter='destination',destination_workload_namespace='{0}',destination_app=~'{1}'}}[{2}]))/sum(rate(istio_request_duration_milliseconds_count{{reporter='destination',destination_workload_namespace='{0}',destination_app=~'{1}'}}[{2}]))/1000",
-    "req": "sum(rate(istio_requests_total{{destination_workload_namespace='{0}',destination_app=~'{1}'}}[{2}]))",
-    "pod": "count(container_spec_cpu_period{{namespace='{0}',pod=~'{1}'}})",
-    # "energy_idle":"kepler_container_joules_total{{namespace='monitoring', container_name=~'{1}', mode='idle'}}",
-    # "energy_dynamic":"kepler_container_joules_total{{namespace='monitoring', container_name=~'{1}', mode='dynamic'}}",
-    # "energy": "sum(kepler_container_joules_total{{namespace='monitoring', pod_name=~'{1}'}}) by (pod_name)"
-    # "throttled_cpu": "sum(rate(container_cpu_cfs_throttled_periods_total{{namespace='{0}',pod=~'{1}'}}[1m]))"
+###############################################################################
+# 1.  ──  CONFIG  (no services constant any more)  ─────────────────────────── #
+###############################################################################
+NAMESPACE  = "default"
+INTERVAL   = 120                # seconds
+METRICS    = ["pod", "vCPU", "cpu", "mem_", "mem", "res", "req"]
+
+PROM_API       = "http://localhost:9090/api/v1/query?query="
+PROM_API_ISTIO = "http://localhost:9091/api/v1/query?query="
+
+# PromQL templates: {0}=namespace, {1}=regex for pod|destination_app, {2}=step
+TEMPLATE = {
+    # ---- cAdvisor / kubelet ------------------------------------------------
+    "vCPU": ("sum by(pod)(rate(container_cpu_usage_seconds_total"
+             "{{namespace='{0}',pod=~'{1}'}}[1m]))"),
+    "cpu":  ("sum by(pod)(irate(container_cpu_usage_seconds_total"
+             "{{namespace='{0}',pod=~'{1}'}}[1m])) "
+             "/ sum by(pod)(container_spec_cpu_quota"
+             "{{namespace='{0}',pod=~'{1}'}} "
+             "/ container_spec_cpu_period{{namespace='{0}',pod=~'{1}'}})"),
+    "mem_": ("sum by(pod)(container_memory_usage_bytes"
+             "{{namespace='{0}',pod=~'{1}'}})"),
+    "mem":  ("sum by(pod)(container_memory_usage_bytes"
+             "{{namespace='{0}',pod=~'{1}'}}) "
+             "/ sum by(pod)(container_spec_memory_limit_bytes"
+             "{{namespace='{0}',pod=~'{1}'}})"),
+    "pod":  ("count by(pod)(container_spec_cpu_period"
+             "{{namespace='{0}',pod=~'{1}'}})"),
+    # ---- Istio -------------------------------------------------------------
+    "res":  ("sum by(destination_app)(rate("
+             "istio_request_duration_milliseconds_sum"
+             "{{reporter='destination',destination_workload_namespace='{0}',"
+             "destination_app=~'{1}'}}[{2}])) "
+             "/ sum by(destination_app)(rate("
+             "istio_request_duration_milliseconds_count"
+             "{{reporter='destination',destination_workload_namespace='{0}',"
+             "destination_app=~'{1}'}}[{2}])) / 1000"),
+    "req":  ("sum by(destination_app)(rate("
+             "istio_requests_total"
+             "{{destination_workload_namespace='{0}',"
+             "destination_app=~'{1}'}}[{2}]))"),
 }
-prefix_api = "http://localhost:9090/api/v1/query?query="
-prefix_api_istio = "http://localhost:9091/api/v1/query?query="
-namespace = 'default'
-interval = 120
-services = ["adservice", "cartservice", "checkoutservice","currencyservice","emailservice","frontend","paymentservice","productcatalogservice","recommendationservice","shippingservice"]
+
+###############################################################################
+# 2.  ──  HELPERS  ─────────────────────────────────────────────────────────── #
+###############################################################################
+_svc_re = re.compile(r"^([a-z0-9-]+?)(?:-[0-9a-f]{4,}|-[0-9]+-[0-9a-f]{5,})?$").match
+
+def _service_from_pod(pod: str, services: list[str]) -> str | None:
+    """
+    Return the service prefix this pod belongs to, or None.
+
+    A pod matches a service if it is *exactly the same* or starts with
+    "<service>-", which is how every Kubernetes replica-name looks.
+    """
+    for svc in services:                # the list you passed to save_all_fetch_data
+        if pod == svc or pod.startswith(svc + "-"):
+            return svc
+    return None
+
+def _prom_query(expr: str, ts: float, istio: bool = False) -> list[dict]:
+    url = (PROM_API_ISTIO if istio else PROM_API) \
+          + urllib.parse.quote_plus(expr) + f"&time={ts}"
+    return requests.get(url, timeout=20).json()["data"]["result"]
+
+###############################################################################
+# 3.  ──  CORE  ────────────────────────────────────────────────────────────── #
+###############################################################################
+def _collect_metric(mode: str,
+                    t0: datetime.datetime,
+                    seconds: int,
+                    interval: int,
+                    services: list[str]) -> dict[str, list[float]]:
+    """Query ONE metric for ALL requested services."""
+    out = {svc: [] for svc in services}
+
+    # 1. build regex identical to the original “svc.*” wildcard
+    regex = "(" + "|".join(f"{svc}.*" for svc in services) + ")"
+
+    # 2. ready-made PromQL
+    expr = TEMPLATE[mode].format(NAMESPACE, regex, f"{interval}s")
+    is_istio = mode in ("res", "req")
+
+    # 3. loop over the timeline
+    for offs in range(0, seconds, interval):
+        ts   = t0 + datetime.timedelta(seconds=offs)
+        vect = _prom_query(expr, time.mktime(ts.timetuple()), istio=is_istio)
+        snap = {svc: 0.0 for svc in services}          # initialise with 0
+        for item in vect:                              # Prometheus vector
+            raw = item["value"][1]
+            val = float(raw) if raw not in ("NaN", "+Inf", "-Inf") else 0.0
+
+            # Which label holds the name we want?
+            label = (item["metric"].get("destination_app")            # Istio metrics
+                    if is_istio else
+                    item["metric"].get("pod", ""))                   # cAdvisor/K8s
+
+            svc = (label if is_istio else _service_from_pod(label, services))
+            if svc in snap:                       # ignore pods we didn’t ask for
+                snap[svc] += val                  # <── SUM per-prefix here
+
+        # append (with zero-fill) to the output series
+        for svc in services:
+            out[svc].append(snap[svc])
+
+    return out
 
 
-metrics = ["pod", "vCPU", "cpu", "mem_", "mem","res","req"]
+def save_all_fetch_data(times: list[tuple[str, str | int]],
+                        start_iter: int,
+                        root_dir: str,
+                        interval: int = INTERVAL,
+                        services: list[str] | None = None,
+                        metrics: list[str] = METRICS) -> None:
+    """High-level driver.  *services* is now REQUIRED."""
+    if not services:
+        raise ValueError("Please pass a non-empty list of services.")
+    os.makedirs(root_dir, exist_ok=True)
 
-# metrics = ["pod", "vCPU", "cpu", "mem_", "mem", "energy_idle", "energy_dynamic", "throttled_cpu"]
-# metrics = ["pod", "cpu", "mem", "res", "req"]
+    for i, (start_str, end_or_len) in enumerate(times):
+        t0 = datetime.datetime.strptime(start_str, "%Y-%m-%d %H:%M:%S")
+        seconds = (
+            int((datetime.datetime.strptime(end_or_len, "%Y-%m-%d %H:%M:%S") - t0).total_seconds())
+            if isinstance(end_or_len, str) else int(end_or_len)
+        )
+        iter_id = start_iter + i
 
-training_root_dir = ''
+        # one Prometheus call per metric/timestep
+        matrix = {m: _collect_metric(m, t0, seconds, interval, services)
+                  for m in metrics}
 
-def fetch_cpu_usage_for_hpa(service_name):
-    try:
-        # Fetch specific pod that matches the service name pattern
-        pod_list_cmd = subprocess.run([
-            "kubectl", "get", "pods", "-o", "jsonpath={.items[*].metadata.name}"
-        ], capture_output=True, text=True, check=True)
-        pod_names = pod_list_cmd.stdout.strip().split()
-        
-        # Find the first matching pod
-        service_pattern = re.compile(f"^{re.escape(service_name)}")
-        pod_name = next((pod for pod in pod_names if service_pattern.match(pod)), None)
-        
-        if not pod_name:
-            print("No matching pod found.")
-            return []
-        
-        # Fetch pod details in JSON format
-        pod_json = subprocess.run([
-            "kubectl", "get", "pod", pod_name, "-o", "json"
-        ], capture_output=True, text=True, check=True).stdout
-        pod = json.loads(pod_json)
-        
-        results = []
-        containers = pod.get("spec", {}).get("containers", [])
-
-        for container in containers:
-            container_name = container["name"]
-            
-            # Filter by container name matching service name
-            if container_name != service_name:
-                continue
-            
-            cpu_request = container.get("resources", {}).get("requests", {}).get("cpu", "none")
-            
-            # Convert CPU request to millicores
-            if cpu_request == "none":
-                cpu_request = 0
-            elif cpu_request.endswith("m"):
-                cpu_request = int(cpu_request.rstrip("m"))
-            else:
-                cpu_request = int(float(cpu_request) * 1000)
-            
-            # Fetch CPU usage using kubectl top pod
-            cpu_usage_cmd = subprocess.run([
-                "kubectl", "top", "pod", pod_name, "--no-headers"
-            ], capture_output=True, text=True)
-            
-            cpu_usage = 0
-            if cpu_usage_cmd.returncode == 0:
-                output = cpu_usage_cmd.stdout.strip().split()
-                if len(output) > 1:
-                    cpu_usage = int(output[1].rstrip("m"))
-            print(f"CPU REQ: {cpu_request}")
-            print(f"CPU USAGE: {cpu_usage}")
-            # Calculate CPU utilization percentage
-            utilization = (cpu_usage / cpu_request * 100) if cpu_request > 0 and cpu_usage > 0 else 0
-            print(f"CPU UTILIZATION: {utilization}")
-            
-            # Append results
-            results.append({
-                "pod": pod_name,
-                "container": container_name,
-                "cpu_request": cpu_request,
-                "cpu_usage": cpu_usage,
-                "utilization": round(utilization, 2)
-            })
-        
-        return results[0]['utilization']
-    
-    except subprocess.CalledProcessError as e:
-        print(f"Error executing command: {e}")
-        return []
-
-def fetch_cpu_usage(svc_name, namespace=namespace, interval=30):
-    cpu_api = template["cpu"].format(namespace, svc_name, str(interval)+'s')
-    url = prefix_api + urllib.parse.quote_plus(cpu_api)
-    res = requests.get(url).json()["data"]
-    v = 0
-    if "result" in res and len(res["result"]) > 0 and "value" in res["result"][0]:
-        v = res["result"][0]["value"][1]
-    return float(v)
-
-
-def fetch_mem_usage(svc_name, namespace=namespace):
-    mem_api = template["mem"].format(namespace, svc_name)
-    url = prefix_api + urllib.parse.quote_plus(mem_api)
-    res = requests.get(url).json()["data"]
-    v = 0
-    if "result" in res and len(res["result"]) > 0 and "value" in res["result"][0]:
-        v = res["result"][0]["value"][1]
-    return float(v)
-
-
-def fetch_res_time(svc_name, namespace=namespace, interval=30):
-    res_api = template["res"].format(namespace, svc_name, str(interval)+'s')
-    url = prefix_api + urllib.parse.quote_plus(res_api)
-    res = requests.get(url).json()["data"]
-    if "result" in res and len(res["result"]) > 0 and "value" in res["result"][0]:
-        v = res["result"][0]["value"]
-        if v[1] != 'NaN':
-            return float(v[1])
-    return 0
-
-
-def fetch_req(svc_name, namespace=namespace, interval=30):
-    req_api = template["req"].format(namespace, svc_name, str(interval)+'s')
-    url = prefix_api + urllib.parse.quote_plus(req_api)
-    req = requests.get(url).json()["data"]
-    if "result" in req and len(req["result"]) > 0 and "value" in req["result"][0]:
-        v = req["result"][0]["value"]
-        if v[1] != 'NaN':
-            return int(float(v[1]))
-    return 0
-
-
-def fetch_prior_req(svc_name, namespace=namespace, interval=30, delta=30):
-    req_api = template["req"].format(namespace, svc_name, str(interval)+'s')
-    url = prefix_api + urllib.parse.quote_plus(req_api) + "&time=" + str(time.time() - delta)
-    req = requests.get(url).json()["data"]
-    if "result" in req and len(req["result"]) > 0 and "value" in req["result"][0]:
-        v = req["result"][0]["value"]
-        if v[1] != 'NaN':
-            return int(float(v[1]))
-    return 0
-
-
-def fetch_pods(svc_name, namespace=namespace):
-    # pod_api = template["pod"].format(namespace, svc_name)
-    pod_api = template["pod"].format(namespace, f"{svc_name}.*")#mode为pod，
-    url = prefix_api + urllib.parse.quote_plus(pod_api)
-    #pod = requests.get(url).json()
-    pod = requests.get(url).json()["data"]
-    if "result" in pod and len(pod["result"]) > 0 and "value" in pod["result"][0]:
-        v = pod["result"][0]["value"]
-        if v[1] != 'NaN':
-            return int(float(v[1]))
-    return 0
-
-
-def save_fetch_data(svc_name, mode, start_time, latsted_time, interval, save_file):
-    api_str = template[mode].format(namespace, f"{svc_name}.*", str(interval)+'s')#mode为pod，
-    if mode in ["res", "req"]:
-        api_url = prefix_api_istio
-    else:
-        api_url = prefix_api
-    # start_time = datetime.datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S')
-    with open(save_file, 'w') as f:
-        for i in range(0, latsted_time, int(interval)):#以interval为间隔
-            t = start_time + datetime.timedelta(seconds=i)#加时间
-            unixtime = time.mktime(t.timetuple())#返回用秒数来表示时间的浮点数。
-            url = api_url + urllib.parse.quote_plus(api_str) + "&time=" + str(unixtime)
-            res = requests.get(url).json()["data"]
-            if "result" in res and len(res["result"]) > 0 and "value" in res["result"][0]:
-                v = res["result"][0]["value"]
-                if v[1] == 'NaN' or 'Inf' in v[1]:
-                    print("0", file=f)
-                else:
-                    print(str(v[1]), file=f)
-            else:
-                print("0", file=f)
-
-
-def save_all_fetch_data(times=[], start_iter=1, root_dir='/home/boutiquessj/pythonForK6/data/', interval=interval, services=services, metrics=metrics):
-    if not os.path.exists(root_dir):#若不存在则创建一个
-        os.makedirs(root_dir)
-    for i, (start_time, end_or_lasted) in enumerate(times):
-        start_time = datetime.datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S') #+ datetime.timedelta(hours=8)
-        if type(end_or_lasted) == str:
-            end_time = datetime.datetime.strptime(end_or_lasted, '%Y-%m-%d %H:%M:%S') #+ datetime.timedelta(hours=8)#######因为时区问题要加8
-            lasted_time = int((end_time-start_time).total_seconds())#有多少秒
-        else:
-            lasted_time = int(end_or_lasted)
-        if os.path.exists(root_dir+'{}_productpage_res.log'.format(start_iter+i)):
-            print("Iternum needs update")
-            return
+        # write the files exactly like the original version
         for svc in services:
             for m in metrics:
-                save_fetch_data(svc, m, start_time, lasted_time, interval, root_dir+"{}_{}_{}.log".format(start_iter+i, svc, m))
-                print("saved file:"+root_dir+"{}_{}_{}.log".format(start_iter+i, svc, m))
+                path = f"{root_dir}{iter_id}_{svc}_{m}.log"
+                with open(path, "w") as f:
+                    f.write("\n".join(map(str, matrix[m][svc])))
+                # print("saved file:", path)
 
-def load_fetch_data(root_dir, start_iter=1, end_iter=None, services=services, metrics=metrics) -> pd.DataFrame:
-    if not end_iter:
+
+###############################################################################
+# 4.  ──  Loader (needs explicit *services* too)  ─────────────────────────── #
+###############################################################################
+def load_fetch_data(root_dir: str,
+                    services: list[str],
+                    start_iter: int = 1,
+                    end_iter: int | None = None,
+                    metrics: list[str] = METRICS) -> pd.DataFrame:
+    if end_iter is None:
         end_iter = start_iter
-    data = {}
-    for svc in services:
-        data[svc] = {}
-        for m in metrics:
-            data[svc][m] = []
-    for svc in services:
-        for m in metrics:
-            for iternum in range(start_iter, end_iter+1):
-                path = root_dir + '{}_{}_{}.log'.format(iternum, svc, m)
-                with open(path, 'r') as f:
-                    lines = f.readlines()
-                data[svc][m] += list(map(lambda x:float(x), lines))
-    D = [data[svc][m] for svc in services for m in metrics]
-    data_df = pd.DataFrame(np.array(D).T, columns=[svc+"_"+m for svc in services for m in metrics])
-    return data_df
+    data = {svc: {m: [] for m in metrics} for svc in services}
+
+    for it in range(start_iter, end_iter + 1):
+        for svc in services:
+            for m in metrics:
+                with open(f"{root_dir}{it}_{svc}_{m}.log") as f:
+                    data[svc][m] += [float(x) for x in f.read().splitlines()]
+
+    array = [data[svc][m] for svc in services for m in metrics]
+    cols  = [f"{svc}_{m}" for svc in services for m in metrics]
+    return pd.DataFrame(np.array(array).T, columns=cols)
 
 
-def load_processed_fetch_data(iternums=[1, 2], root_dir=training_root_dir, metrics=metrics):
-    data_df = load_fetch_data(iternums, root_dir, metrics)
-    D, l = [], len(metrics)
-    for r in data_df.values:
-        D.append([1]+list(r[:l]))
-        D.append([2]+list(r[l:2*l]))
-        D.append([3]+list(r[2*l:3*l]))
-        D.append([4]+list(r[3*l:]))
-    data_df = pd.DataFrame(D, columns=['svc']+metrics)
-    data_df['pod'] = data_df['pod'].astype(int)
-    return data_df
+# ─────────────────────────────────────────────────────────────────────────────
+# Example
+# ─────────────────────────────────────────────────────────────────────────────
+if __name__ == "__main__":
+    TIMES = [("2023-03-04 04:09:01", "2023-03-04 05:25:15")]
+    SRV   = ["adservice", "cartservice", "checkoutservice"]       # passed in!
 
-
-if __name__ == '__main__':
- 
-    times = [
-        ('2023-03-04 04:09:01', '2023-03-04 05:25:15')
-
-    ]#
-    save_all_fetch_data(times, 1, root_dir='./dataForTraining/', interval=60, services=services)#interval 间隔
-    print("ok")
+    save_all_fetch_data(
+        times       = TIMES,
+        start_iter  = 1,
+        root_dir    = "./dataForTraining/",
+        interval    = 60,
+        services    = SRV
+    )
+    print("✔ done")

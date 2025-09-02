@@ -1,0 +1,4 @@
+Sparsity: 0.6250
+Test results of current graph: 
+MAE:  0.0995  RMSE:  0.2182  MAPE:  0.0204  
+Horizon 1  mae:  0.0995  rmse:  0.2182  mape:  0.0204  
