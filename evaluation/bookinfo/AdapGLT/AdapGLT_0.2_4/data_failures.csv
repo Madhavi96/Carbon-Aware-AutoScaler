@@ -1,0 +1,3 @@
+Method,Name,Error,Occurrences
+GET,/productpage,RemoteDisconnected('Remote end closed connection without response'),5
+GET,/productpage,HTTPError('503 Server Error: Service Unavailable for url: /productpage'),4353
