@@ -1,0 +1,5 @@
+Method,Name,Error,Occurrences
+GET,/productpage,"ConnectionResetError(104, 'Connection reset by peer')",1490
+GET,/productpage,"ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x....>, 'Connection to localhost timed out. (connect timeout=None)')",376
+GET,/productpage,RemoteDisconnected('Remote end closed connection without response'),14
+GET,/productpage,HTTPError('503 Server Error: Service Unavailable for url: /productpage'),2412

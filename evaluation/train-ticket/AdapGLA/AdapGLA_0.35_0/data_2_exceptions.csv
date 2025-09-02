@@ -1,0 +1,425 @@
+Count,Message,Traceback,Nodes
+250,'data',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 242, in query_and_preserve_use
+    if res.json()[""data""] != ""Success"":
+       ~~~~~~~~~~^^^^^^^^
+",local
+3,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 174, in query_and_preserve_use
+    trip_ids = self.query_high_speed_ticket(place_pair=high_speed_place_pair, headers=headers, time=tomorrow)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 456, in query_high_speed_ticket
+    print(payload)
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 285, in query_and_collect_ticket_use
+    self.query_and_collect_ticket(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 923, in query_and_collect_ticket
+    pairs = self.query_orders(headers=headers, types=tuple([0]))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 664, in query_orders
+    print(f""queried {len(pairs)} orders"")
+",local
+8,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 241, in query_and_preserve_use
+    print(res.json())
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 235, in query_and_preserve_use
+    print(f""choices: preserve_high: {high_speed} need_food:{need_food}  need_consign: {need_consign}  need_assurance:{need_assurance}"")
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 174, in query_and_preserve_use
+    trip_ids = self.query_high_speed_ticket(place_pair=high_speed_place_pair, headers=headers, time=tomorrow)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 457, in query_high_speed_ticket
+    print(""PAYLOADL"")
+",local
+9,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 233, in query_and_preserve_use
+    print(""payload:"" + str(base_preserve_payload))
+",local
+6,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 332, in query_and_rebook_use
+    self.query_and_rebook(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 993, in query_and_rebook
+    self.rebook_ticket(old_order_id=pair[0], old_trip_id=pair[1], new_trip_id=new_trip_id, new_date=new_date, new_seat_type=new_seat_type, headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 881, in rebook_ticket
+    print(r.text)
+",local
+4,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 366, in query_order_and_pay_use
+    pairs = self.query_orders(headers=headers, types=tuple([0, 1]))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 664, in query_orders
+    print(f""queried {len(pairs)} orders"")
+",local
+9,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 332, in query_and_rebook_use
+    self.query_and_rebook(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 993, in query_and_rebook
+    self.rebook_ticket(old_order_id=pair[0], old_trip_id=pair[1], new_trip_id=new_trip_id, new_date=new_date, new_seat_type=new_seat_type, headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 878, in rebook_ticket
+    print(payload)
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 297, in query_and_enter_station_use
+    self.query_and_enter_station(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 941, in query_and_enter_station
+    pairs = self.query_orders(headers=headers, types=tuple([0]))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 664, in query_orders
+    print(f""queried {len(pairs)} orders"")
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 319, in query_and_put_consign_use
+    print(f""start:{start_time} end:{end_time}"")
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 274, in query_and_cancel_use
+    self.query_one_and_cancel(headers=headers,uuid=self.uuid,)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 903, in query_one_and_cancel
+    pairs = self.query_orders(headers=headers, types=tuple([0]))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 664, in query_orders
+    print(f""queried {len(pairs)} orders"")
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 408, in query_travel_left_parallel_use
+    print(f""start:{start_time} end:{end_time}"")
+",local
+2,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 316, in query_and_put_consign_use
+    self.query_one_and_put_consign(headers=headers, pairs=pairs)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 968, in query_one_and_put_consign
+    order_id = self.put_consign(result=pair, headers=headers)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 725, in put_consign
+    print(f""{order_id} put consign success"")
+",local
+2,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 116, in query_admin_basic_config_use
+    self.query_admin_basic_config(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 551, in query_admin_basic_config
+    print(f""config success"")
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 316, in query_and_put_consign_use
+    self.query_one_and_put_consign(headers=headers, pairs=pairs)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 972, in query_one_and_put_consign
+    print(f""{order_id} queried and put consign"")
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 332, in query_and_rebook_use
+    self.query_and_rebook(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 976, in query_and_rebook
+    pairs = self.query_orders(headers=headers, types=tuple([0]))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 664, in query_orders
+    print(f""queried {len(pairs)} orders"")
+",local
+1,'NoneType' object has no attribute 'get',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 107, in query_admin_basic_config_use
+    _, token = self.login()
+               ^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 99, in login
+    uid = data.get(""userId"")
+          ^^^^^^^^
+",local
+395,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 401, in query_travel_left_parallel_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+412,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 271, in query_and_cancel_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+2,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 118, in query_admin_basic_config_use
+    print(f""start:{start_time} end:{end_time}"")
+",local
+414,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 347, in query_food_use
+    headers[""Authorization""] = ""Bearer "" + token
+                        ~~~~~~~~~~^~~~~~~
+",local
+2,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 421, in query_travel_left_use
+    print(f""start:{start_time}"")
+",local
+384,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 296, in query_and_enter_station_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+390,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 308, in query_and_put_consign_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+2,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 336, in query_and_rebook_use
+    print(f""start:{start_time} end:{end_time}"")
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 405, in query_travel_left_parallel_use
+    self.query_travel_left_parallel(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 1026, in query_travel_left_parallel
+    trip_ids = self.query_high_speed_ticket_parallel(place_pair=high_speed_place_pair, headers=headers, time=time.strftime(""%Y-%m-%d"", time.localtime()))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 586, in query_high_speed_ticket_parallel
+    print(response.status_code)
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 353, in query_food_use
+    print(f""start:{start_time} end:{end_time}"")
+",local
+1,[Errno 32] Broken pipe,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 314, in query_and_put_consign_use
+    pairs2 = self.query_orders_all_info(headers=headers, query_other=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 700, in query_orders_all_info
+    print(f""queried {len(pairs)} orders"")
+",local
+416,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 363, in query_order_and_pay_use
+    headers[""Authorization""] = ""Bearer "" + token
+                 ~~~~~~~~~~^~~~~~~
+",local
+414,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 390, in query_route_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+416,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 113, in query_admin_basic_config_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+433,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 154, in query_and_preserve_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+397,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 129, in query_advanced_ticket_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+393,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 419, in query_travel_left_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+409,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 255, in query_admin_basic_price_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+388,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 284, in query_and_collect_ticket_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+402,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_train.py"", line 329, in query_and_rebook_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
