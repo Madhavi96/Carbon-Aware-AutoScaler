@@ -27,6 +27,6 @@ def remove_columns_with_patterns(input_csv, output_csv):
     print(f"Filtered CSV saved as: {output_csv}")
 
 # Example usage
-input_csv = "/home/ubuntu/carbon-aware-autoscaler/DeepScaler/data/metrics_data_hpa_no_preserve_2m.csv"   # Replace with your input CSV file name
-output_csv = "/home/ubuntu/carbon-aware-autoscaler/DeepScaler/data/metrics_data_hpa_no_preserve_2m_7_features.csv"   # Output file name
+input_csv = "/home/ubuntu/Carbon-Aware-AutoScaler/DeepScaler/data/hpa_fresh_1_metrics_data.csv"   # Replace with your input CSV file name
+output_csv = "/home/ubuntu/Carbon-Aware-AutoScaler/DeepScaler/data/hpa_fresh_1.csv"   # Output file name
 remove_columns_with_patterns(input_csv, output_csv)

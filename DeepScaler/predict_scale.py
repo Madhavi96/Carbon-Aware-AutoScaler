@@ -11,7 +11,8 @@ from torch.utils.data import DataLoader
 from utils import scaler
 from models import AdapGL
 from dataset import TPDataset2
-from metrics_fetch import save_all_fetch_data, fetch_cpu_usage_for_hpa, fetch_pods
+from metrics_fetch import save_all_fetch_data
+from metrics_fetch_org import fetch_pods
 from prepareData import predict_read_and_generate_dataset
 from k8sop import K8sOp
 
@@ -88,7 +89,9 @@ def predict_scaling(xx, model_config_path, train_config_path, model_name):
 
     net_pred = Model(**model_config[model_name], **data_config).to(device)
     net_pred.load_state_dict(torch.load(args.model_save_path))  # Load trained model
-    best_adj_path = os.path.join(os.path.dirname(args.model_save_path), "best_adj_mx.npy")
+    print(model_save_dir)
+    best_adj_path = os.path.join(model_save_dir, "best_adj_mx.npy")
+    print(best_adj_path)
     adj = np.load(best_adj_path)
     torch_adj = torch.from_numpy(adj)
     data_tensor = torch.from_numpy(data_loader.dataset.data['x'])
@@ -105,28 +108,28 @@ def predict_scaling(xx, model_config_path, train_config_path, model_name):
     print(pred)
     return pred
 
-def determine_scaling_for_hpa(services_to_scale):
-    target_cpu_utilization = 60
-    pods_num_to_scale = {}
+# def determine_scaling_for_hpa(services_to_scale):
+#     target_cpu_utilization = 60
+#     pods_num_to_scale = {}
     
-    for svc_name in services_to_scale:
-        print(f"Service : {svc_name}")
+#     for svc_name in services_to_scale:
+#         print(f"Service : {svc_name}")
 
-        current_cpu = fetch_cpu_usage_for_hpa(svc_name)
-        current_pod_count = fetch_pods(svc_name)
+#         current_cpu = fetch_cpu_usage_for_hpa(svc_name)
+#         current_pod_count = fetch_pods(svc_name)
       
-        print(f"Current CPU: {current_cpu}")
-        print(f"Current PODS: {current_pod_count}")
-        # Calculate target pod count using HPA formula
-        target_pod_count = math.ceil((current_cpu * current_pod_count) / target_cpu_utilization)
-        print(f"Target PODS: {target_pod_count}")
+#         print(f"Current CPU: {current_cpu}")
+#         print(f"Current PODS: {current_pod_count}")
+#         # Calculate target pod count using HPA formula
+#         target_pod_count = math.ceil((current_cpu * current_pod_count) / target_cpu_utilization)
+#         print(f"Target PODS: {target_pod_count}")
 
-        if target_pod_count > 10:
-            continue
+#         if target_pod_count > 10:
+#             continue
     
-        pods_num_to_scale[svc_name] = target_pod_count if target_pod_count > 0 else 1 
+#         pods_num_to_scale[svc_name] = target_pod_count if target_pod_count > 0 else 1 
         
-    return pods_num_to_scale
+#     return pods_num_to_scale
     
 def determine_services_to_scale(pred, services, threshold):
     services_to_scale = []
@@ -141,7 +144,7 @@ def determine_services_to_scale(pred, services, threshold):
     return services_to_scale
     
 
-def determine_scaling(pred, services, restriction=0.4):
+def determine_scaling(pred, services, restriction=0.35):
     """Determine the number of pods to scale for each service."""
     pods_num_to_scale = {}
     # pred = pred[0]
@@ -176,6 +179,11 @@ def main(args, tracker):
     'ts-ticket-office-mongo', 'ts-ticket-office-service', 'ts-ticketinfo-service', 'ts-train-mongo', 'ts-train-service',
     'ts-travel-mongo', 'ts-travel-plan-service', 'ts-travel-service', 'ts-travel2-mongo', 'ts-travel2-service',
     'ts-ui-dashboard', 'ts-user-mongo', 'ts-user-service', 'ts-verification-code-service', 'ts-voucher-mysql', 'ts-voucher-service']
+    services = ["details", "productpage", "ratings", "reviews"]
+    services=[
+    "adservice", "cartservice", "checkoutservice", "currencyservice", "emailservice", "paymentservice",
+    "productcatalogservice", "recommendationservice", "shippingservice",
+    ]
     metrics = ["pod", "vCPU", "cpu", "mem_", "mem","res","req"]
     # metrics = ["pod", "vCPU", "cpu", "mem_", "mem", "energy_idle", "energy_dynamic", "throttled_cpu"]
     # metrics = ["pod", "cpu", "mem", "res", "req"]
@@ -184,7 +192,7 @@ def main(args, tracker):
     prev_data = None
 
     scale_up_time_tracker = {}  # Tracks the last time a service was scaled up
-    cooldown_period = datetime.timedelta(minutes=2)
+    cooldown_period = datetime.timedelta(minutes=5)
     max_pods = 8
 
     
@@ -207,13 +215,12 @@ def main(args, tracker):
 
             # Prepare input tensor
             xx = prepare_input_tensor(metric_data, services, metrics, prev_data)
-            np.savez("./data/predict_scale", xx)
+            np.savez(f"./data_{args.app_name}/predict_scale", xx)
             print("xx")
             print(xx.shape)
 
             # Generate dataset and predict scaling
-            predict_read_and_generate_dataset('./data/predict_scale.npz', num_of_hours=1, num_for_predict=1, points_per_hour=12, save=True)
-            print("HUE")
+            predict_read_and_generate_dataset(f'./data_{args.app_name}/predict_scale.npz', num_of_hours=1, num_for_predict=1, points_per_hour=12, save=True)
             pred = predict_scaling(xx, args.model_config_path, args.train_config_path, args.model_name)
 
             # Determine and apply scaling
@@ -222,7 +229,7 @@ def main(args, tracker):
             # pods_num_to_scale = determine_scaling_for_hpa(services_to_scale)
             if args.model_name=='AdapGLT':
                 pred = pred[0]
-            pods_num_to_scale = determine_scaling(pred, services)
+            pods_num_to_scale = determine_scaling(pred, services, restriction=args.restriction)
 
             
             #for svc, num_pods in pods_num_to_scale.items():
@@ -263,13 +270,14 @@ def main(args, tracker):
             prev_data = xx
             
     except KeyboardInterrupt:
-        print("Training interrupted manually. Stopping tracker...")
-    # except Exception as e:
-    #    print(f"An error occurred: {e}")
+        print("Training interrupted manually. Stopping tracker...")        
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        raise e
     finally:
         # Stop emissions tracking when the program exits
         tracker.stop()
-        # print(f"Stopped the carbon emission tracker")
+        print(f"Stopped the carbon emission tracker")
         print(f"Prediciton process ended!")
 
     
@@ -283,19 +291,32 @@ if __name__ == '__main__':
     parser.add_argument('--model_name', type=str, default='AdapGLA', help='Model name to train')
     parser.add_argument('--num_epoch', type=int, default=5, help='Training times per epoch')
     parser.add_argument('--num_iter', type=int, default=5, help='Maximum value for iteration')
-    parser.add_argument('--model_save_path', type=str, default='/home/ubuntu/carbon-aware-autoscaler/DeepScaler/model/AdapGLA_1/AdapGLA_1.pkl', help='Model save path')
+    parser.add_argument('--model_save_path', type=str, default='/home/ubuntu/carbon-aware-autoscaler/DeepScaler/model/AdapGLA_fresh/AdapGLA_fresh.pkl', help='Model save path')
     parser.add_argument('--max_graph_num', type=int, default=3, help='Volume of adjacency matrix set')
+    parser.add_argument('--restriction', type=float, default=0.35, help='Fractional threshold for rounding pod scaling')
+    parser.add_argument('--round', type=int, help='Experiment Round')
+    parser.add_argument('--app_name', type=str, help='App Name')
 
     args = parser.parse_args()
+    app_name = args.app_name
+
     # base_name = os.path.splitext(os.path.basename(args.model_save_path))[0]
     model_save_dir = os.path.dirname(args.model_save_path)
 
     args.model_save_dir = model_save_dir
+    round = args.round
+
     os.makedirs(model_save_dir, exist_ok=True)
-    if os.path.exists(os.path.join(model_save_dir,'emissions_inference.csv')):
-        os.remove(os.path.join(model_save_dir,'emissions_inference.csv'))
+    emissions_inference_file = f"emissions_inference_{round}.csv"
+    emissions_file_path = os.path.join(model_save_dir, emissions_inference_file)
+
+    print(f"file path is: {emissions_file_path}")
+
+    if os.path.exists(emissions_file_path):
+        os.remove(emissions_file_path)
     tracker = EmissionsTracker(
-        output_file=os.path.join(model_save_dir,'emissions_inference.csv')
+        output_file=emissions_file_path,
+        tracking_mode="process"
     ) #
     
     main(args, tracker)
