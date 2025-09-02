@@ -17,9 +17,11 @@ def get_services():
     
     if process.returncode == 0:
         output = process.stdout
+        # TODO: check if any logic change is required here for a specific application to omit unnecessary services.
         service_names = [
             line.split()[0] for line in output.splitlines()[1:]
-            if line.split()[0].startswith("ts-")
+            if not line.split()[0].startswith("redis") and 
+            not line.split()[0].startswith("frontend")
         ]
         return service_names
     else:

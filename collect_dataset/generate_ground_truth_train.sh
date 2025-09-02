@@ -8,7 +8,7 @@ minikube start --cpus 15 --memory 50000
 bash /home/ubuntu/DIE-train-ticket-app/deploy_istio.sh
 
 bash /home/ubuntu/DIE-train-ticket-app/hpa_all.sh
-
+sleep 120
 start_time=$(date)
 
 ssh -i /home/ubuntu/DIE-train-ticket-app/train.pem ubuntu@$LOCUST_IP << EOF
