@@ -1,0 +1,9 @@
+kubectl autoscale deployment adservice --min=1 --max=8
+kubectl autoscale deployment cartservice --min=1 --max=8
+kubectl autoscale deployment checkoutservice --min=1 --max=8
+kubectl autoscale deployment currencyservice --min=1 --max=8
+kubectl autoscale deployment emailservice --min=1 --max=8
+kubectl autoscale deployment paymentservice --min=1 --max=8
+kubectl autoscale deployment productcatalogservice --min=1 --max=8
+kubectl autoscale deployment recommendationservice --min=1 --max=8
+kubectl autoscale deployment shippingservice --min=1 --max=8
