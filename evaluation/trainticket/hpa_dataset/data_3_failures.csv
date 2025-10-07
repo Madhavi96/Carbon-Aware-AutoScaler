@@ -1,0 +1,21 @@
+Method,Name,Error,Occurrences
+POST,/api/v1/users/login,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/users/login'),1
+POST,/api/v1/preserveservice/preserve,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/preserveservice/preserve'),142
+POST,/api/v1/travel2service/trips/left,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/travel2service/trips/left'),18
+POST,/api/v1/preserveservice/preserve,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/preserveservice/preserve'),13
+GET,/api/v1/foodservice/foods/2021-07-14/Shang%20Hai/Su%20Zhou/D1345,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/foodservice/foods/2021-07-14/Shang%20Hai/Su%20Zhou/D1345'),2
+POST,/api/v1/travelservice/trips/left_parallel,HTTPError('405 Client Error: Method Not Allowed for url: /api/v1/travelservice/trips/left_parallel'),1368
+POST,/api/v1/preserveotherservice/preserveOther,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/preserveotherservice/preserveOther'),20
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/orderOtherService/orderOther/refresh'),176
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/orderOtherService/orderOther/refresh'),1600
+GET,/api/v1/routeservice/routes/92708982-77af-4318-be25-57ccb0ff69ad,HTTPError('404 Client Error: Not Found for url: /api/v1/routeservice/routes/92708982-77af-4318-be25-57ccb0ff69ad'),1385
+POST,/api/v1/orderservice/order/refresh,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/orderservice/order/refresh'),359
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/orderOtherService/orderOther/refresh'),6080
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/travelplanservice/travelPlan/quickest'),90
+POST,/api/v1/orderservice/order/refresh,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/orderservice/order/refresh'),5974
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/travelplanservice/travelPlan/quickest'),285
+POST,/api/v1/orderservice/order/refresh,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/orderservice/order/refresh'),1635
+POST,/api/v1/travel2service/trips/left,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/travel2service/trips/left'),284
+POST,/api/v1/travelservice/trips/left,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/travelservice/trips/left'),101
+POST,/api/v1/preserveotherservice/preserveOther,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/preserveotherservice/preserveOther'),142
+POST,/api/v1/travelservice/trips/left,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/travelservice/trips/left'),15

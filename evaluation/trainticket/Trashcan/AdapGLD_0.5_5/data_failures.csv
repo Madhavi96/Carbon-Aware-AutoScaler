@@ -1,0 +1,22 @@
+Method,Name,Error,Occurrences
+POST,/api/v1/rebookservice/rebook,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/rebookservice/rebook'),3
+POST,/api/v1/users/login,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/users/login'),20
+POST,/api/v1/orderOtherService/orderOther/refresh,RemoteDisconnected('Remote end closed connection without response'),31
+POST,/api/v1/inside_pay_service/inside_payment,RemoteDisconnected('Remote end closed connection without response'),34
+POST,/api/v1/rebookservice/rebook,RemoteDisconnected('Remote end closed connection without response'),2
+POST,/api/v1/travelservice/trips/left_parallel,HTTPError('405 Client Error: Method Not Allowed for url: /api/v1/travelservice/trips/left_parallel'),710
+POST,/api/v1/inside_pay_service/inside_payment,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/inside_pay_service/inside_payment'),3
+POST,/api/v1/users/login,RemoteDisconnected('Remote end closed connection without response'),65
+POST,/api/v1/inside_pay_service/inside_payment,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/inside_pay_service/inside_payment'),7
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/orderOtherService/orderOther/refresh'),41
+GET,/api/v1/routeservice/routes/92708982-77af-4318-be25-57ccb0ff69ad,HTTPError('404 Client Error: Not Found for url: /api/v1/routeservice/routes/92708982-77af-4318-be25-57ccb0ff69ad'),721
+POST,/api/v1/orderservice/order/refresh,RemoteDisconnected('Remote end closed connection without response'),18
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/travelplanservice/travelPlan/quickest'),1
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/travelplanservice/travelPlan/quickest'),2
+POST,/api/v1/users/login,"ConnectionRefusedError(111, 'Connection refused')",79050
+POST,/api/v1/rebookservice/rebook,"ConnectionResetError(104, 'Connection reset by peer')",1
+POST,/api/v1/orderservice/order/refresh,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/orderservice/order/refresh'),14
+POST,/api/v1/users/login,"ConnectionResetError(104, 'Connection reset by peer')",329
+POST,/api/v1/orderOtherService/orderOther/refresh,"ConnectionResetError(104, 'Connection reset by peer')",14
+POST,/api/v1/inside_pay_service/inside_payment,"ConnectionResetError(104, 'Connection reset by peer')",1172
+POST,/api/v1/travelplanservice/travelPlan/quickest,RemoteDisconnected('Remote end closed connection without response'),1

@@ -1,0 +1,75 @@
+Method,Name,Error,Occurrences
+GET,/api/v1/cancelservice/cancel/095292fb-195e-42f8-8777-c1578cf02f46/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/cancelservice/cancel/095292fb-195e-42f8-8777-c1578cf02f46/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),1
+PUT,/api/v1/consignservice/consigns,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/consignservice/consigns'),3
+POST,/api/v1/users/login,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/users/login'),232
+POST,/api/v1/rebookservice/rebook,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/rebookservice/rebook'),13
+PUT,/api/v1/consignservice/consigns,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/consignservice/consigns'),5
+POST,/api/v1/users/login,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/users/login'),69
+POST,/api/v1/users/login,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/users/login'),53
+GET,/api/v1/foodservice/foods/2021-07-14/Shang%20Hai/Su%20Zhou/D1345,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/foodservice/foods/2021-07-14/Shang%20Hai/Su%20Zhou/D1345'),9
+POST,/api/v1/preserveservice/preserve,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/preserveservice/preserve'),22
+GET,/api/v1/adminbasicservice/adminbasic/prices,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/adminbasicservice/adminbasic/prices'),3
+GET,/api/v1/contactservice/contacts/account/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/contactservice/contacts/account/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),4
+POST,/api/v1/travel2service/trips/left,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/travel2service/trips/left'),124
+POST,/api/v1/preserveservice/preserve,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/preserveservice/preserve'),40
+GET,/api/v1/cancelservice/cancel/871edf6d-8b3a-4af5-8f68-436047bdb337/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/cancelservice/cancel/871edf6d-8b3a-4af5-8f68-436047bdb337/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),1
+POST,/api/v1/users/login,HTTPError('502 Server Error: Bad Gateway for url: /api/v1/users/login'),1
+POST,/api/v1/travelservice/trips/left_parallel,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/travelservice/trips/left_parallel'),2
+GET,/api/v1/foodservice/foods/2021-07-14/Shang%20Hai/Su%20Zhou/D1345,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/foodservice/foods/2021-07-14/Shang%20Hai/Su%20Zhou/D1345'),45
+POST,/api/v1/travelservice/trips/left_parallel,"ConnectionResetError(104, 'Connection reset by peer')",1
+GET,/api/v1/adminbasicservice/adminbasic/prices,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/adminbasicservice/adminbasic/prices'),10
+GET,/api/v1/adminbasicservice/adminbasic/configs,"ConnectionResetError(104, 'Connection reset by peer')",1
+GET,/api/v1/adminbasicservice/adminbasic/configs,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/adminbasicservice/adminbasic/configs'),12
+POST,/api/v1/travelservice/trips/left_parallel,HTTPError('405 Client Error: Method Not Allowed for url: /api/v1/travelservice/trips/left_parallel'),382
+POST,/api/v1/inside_pay_service/inside_payment,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/inside_pay_service/inside_payment'),20
+GET,/api/v1/executeservice/execute/execute/9086878d-153c-4360-8144-3e732871c1f9,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/executeservice/execute/execute/9086878d-153c-4360-8144-3e732871c1f9'),1
+POST,/api/v1/users/login,RemoteDisconnected('Remote end closed connection without response'),1
+POST,/api/v1/preserveotherservice/preserveOther,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/preserveotherservice/preserveOther'),34
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/orderOtherService/orderOther/refresh'),51
+GET,/api/v1/contactservice/contacts/account/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/contactservice/contacts/account/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),1
+GET,/api/v1/executeservice/execute/collected/8836b1be-96cc-4593-902c-7f14c44bae5c,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/executeservice/execute/collected/8836b1be-96cc-4593-902c-7f14c44bae5c'),1
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('502 Server Error: Bad Gateway for url: /api/v1/travelplanservice/travelPlan/quickest'),1
+POST,/api/v1/inside_pay_service/inside_payment,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/inside_pay_service/inside_payment'),356
+POST,/api/v1/inside_pay_service/inside_payment,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/inside_pay_service/inside_payment'),542
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/orderOtherService/orderOther/refresh'),7
+GET,/api/v1/assuranceservice/assurances/types,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/assuranceservice/assurances/types'),1
+GET,/api/v1/executeservice/execute/collected/36885d6c-d47d-464c-83cd-5563a0a8c767,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/executeservice/execute/collected/36885d6c-d47d-464c-83cd-5563a0a8c767'),1
+GET,/api/v1/routeservice/routes/92708982-77af-4318-be25-57ccb0ff69ad,HTTPError('404 Client Error: Not Found for url: /api/v1/routeservice/routes/92708982-77af-4318-be25-57ccb0ff69ad'),380
+POST,/api/v1/rebookservice/rebook,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/rebookservice/rebook'),40
+GET,/api/v1/cancelservice/cancel/ff3251d6-d6d4-464b-abad-b19eec9834d4/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/cancelservice/cancel/ff3251d6-d6d4-464b-abad-b19eec9834d4/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),1
+GET,/api/v1/executeservice/execute/collected/9086878d-153c-4360-8144-3e732871c1f9,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/executeservice/execute/collected/9086878d-153c-4360-8144-3e732871c1f9'),1
+GET,/api/v1/cancelservice/cancel/9b250030-f8c5-4f72-a7bb-c4c0cc148f9c/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/cancelservice/cancel/9b250030-f8c5-4f72-a7bb-c4c0cc148f9c/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),1
+GET,/api/v1/adminbasicservice/adminbasic/prices,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/adminbasicservice/adminbasic/prices'),5
+POST,/api/v1/orderservice/order/refresh,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/orderservice/order/refresh'),84
+POST,/api/v1/orderservice/order/refresh,RemoteDisconnected('Remote end closed connection without response'),1
+GET,/api/v1/cancelservice/cancel/932ea19d-a1c4-4e5f-b4bb-a43a026fc233/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/cancelservice/cancel/932ea19d-a1c4-4e5f-b4bb-a43a026fc233/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),1
+POST,/api/v1/orderOtherService/orderOther/refresh,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/orderOtherService/orderOther/refresh'),595
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/travelplanservice/travelPlan/quickest'),2
+GET,/api/v1/executeservice/execute/collected/ef666da5-23fd-47f8-a3b8-e352741a8d37,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/executeservice/execute/collected/ef666da5-23fd-47f8-a3b8-e352741a8d37'),1
+GET,/api/v1/adminbasicservice/adminbasic/configs,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/adminbasicservice/adminbasic/configs'),1
+GET,/api/v1/executeservice/execute/execute/8836b1be-96cc-4593-902c-7f14c44bae5c,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/executeservice/execute/execute/8836b1be-96cc-4593-902c-7f14c44bae5c'),1
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/travelplanservice/travelPlan/quickest'),154
+GET,/api/v1/executeservice/execute/execute/689e1e51-5aa1-45de-9fac-ed7f8e93ddae,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/executeservice/execute/execute/689e1e51-5aa1-45de-9fac-ed7f8e93ddae'),1
+POST,/api/v1/travelservice/trips/left_parallel,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/travelservice/trips/left_parallel'),1
+GET,/api/v1/cancelservice/cancel/d7654b83-a2d0-4143-909a-118f5d2516ff/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/cancelservice/cancel/d7654b83-a2d0-4143-909a-118f5d2516ff/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),1
+PUT,/api/v1/consignservice/consigns,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/consignservice/consigns'),3
+POST,/api/v1/orderservice/order/refresh,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/orderservice/order/refresh'),616
+GET,/api/v1/cancelservice/cancel/8a4c93e9-13bf-4e55-8727-21505b9900fc/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/cancelservice/cancel/8a4c93e9-13bf-4e55-8727-21505b9900fc/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),1
+POST,/api/v1/inside_pay_service/inside_payment,HTTPError('502 Server Error: Bad Gateway for url: /api/v1/inside_pay_service/inside_payment'),4
+POST,/api/v1/travelplanservice/travelPlan/quickest,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/travelplanservice/travelPlan/quickest'),90
+POST,/api/v1/travel2service/trips/left,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/travel2service/trips/left'),3
+GET,/api/v1/executeservice/execute/execute/d7654b83-a2d0-4143-909a-118f5d2516ff,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/executeservice/execute/execute/d7654b83-a2d0-4143-909a-118f5d2516ff'),1
+POST,/api/v1/orderservice/order/refresh,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/orderservice/order/refresh'),4
+POST,/api/v1/rebookservice/rebook,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/rebookservice/rebook'),250
+POST,/api/v1/users/login,"ConnectionResetError(104, 'Connection reset by peer')",26
+POST,/api/v1/travel2service/trips/left,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/travel2service/trips/left'),110
+GET,/api/v1/executeservice/execute/execute/54e756a9-339b-48ef-975a-9c4d6233e205,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/executeservice/execute/execute/54e756a9-339b-48ef-975a-9c4d6233e205'),1
+GET,/api/v1/adminbasicservice/adminbasic/configs,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/adminbasicservice/adminbasic/configs'),9
+POST,/api/v1/travelservice/trips/left,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/travelservice/trips/left'),31
+GET,/api/v1/cancelservice/cancel/42b664c6-c8da-48ca-a0c1-b4190316e79a/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/cancelservice/cancel/42b664c6-c8da-48ca-a0c1-b4190316e79a/4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f'),2
+POST,/api/v1/preserveotherservice/preserveOther,HTTPError('503 Server Error: Service Unavailable for url: /api/v1/preserveotherservice/preserveOther'),1
+POST,/api/v1/preserveotherservice/preserveOther,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/preserveotherservice/preserveOther'),13
+GET,/api/v1/foodservice/foods/2021-07-14/Shang%20Hai/Su%20Zhou/D1345,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/foodservice/foods/2021-07-14/Shang%20Hai/Su%20Zhou/D1345'),16
+GET,/api/v1/executeservice/execute/collected/f468ee8c-0fd5-4712-9996-24a65d3f1260,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/executeservice/execute/collected/f468ee8c-0fd5-4712-9996-24a65d3f1260'),1
+POST,/api/v1/travelservice/trips/left,HTTPError('504 Server Error: Gateway Timeout for url: /api/v1/travelservice/trips/left'),38
+GET,/api/v1/executeservice/execute/collected/54e756a9-339b-48ef-975a-9c4d6233e205,HTTPError('500 Server Error: Internal Server Error for url: /api/v1/executeservice/execute/collected/54e756a9-339b-48ef-975a-9c4d6233e205'),2

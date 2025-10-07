@@ -1,0 +1,119 @@
+Count,Message,Traceback,Nodes
+2361,'data',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 242, in query_and_preserve_use
+    if res.json()[""data""] != ""Success"":
+       ~~~~~~~~~~^^^^^^^^
+",local
+2,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 113, in query_admin_basic_config_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+4,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 369, in query_order_and_pay_use
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+2,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 332, in query_and_rebook_use
+    self.query_and_rebook(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 983, in query_and_rebook
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+5,unsupported operand type(s) for +: 'NoneType' and 'list',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 315, in query_and_put_consign_use
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+2,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 255, in query_admin_basic_price_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+2,object of type 'NoneType' has no len(),"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 200, in query_and_preserve_use
+    trip_id = self.random_from_list(trip_ids)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 31, in random_from_list
+    return random.choice(l)
+           ^^^^^^^^^^^^^^^^
+  File ""/usr/lib/python3.12/random.py"", line 346, in choice
+    if not len(seq):
+           ^^^^^^^^
+",local
+1,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 308, in query_and_put_consign_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+1,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 363, in query_order_and_pay_use
+    headers[""Authorization""] = ""Bearer "" + token
+                 ~~~~~~~~~~^~~~~~~
+",local
+2,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 296, in query_and_enter_station_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+1,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 271, in query_and_cancel_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
