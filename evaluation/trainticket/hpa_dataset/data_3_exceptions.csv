@@ -1,0 +1,210 @@
+Count,Message,Traceback,Nodes
+1287,unsupported operand type(s) for +: 'NoneType' and 'NoneType',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 369, in query_order_and_pay_use
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+1314,unsupported operand type(s) for +: 'NoneType' and 'NoneType',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 315, in query_and_put_consign_use
+    pairs = pairs + pairs2
+            ~~~~~~^~~~~~~~
+",local
+337,Cannot choose from an empty sequence,"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 200, in query_and_preserve_use
+    trip_id = self.random_from_list(trip_ids)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 31, in random_from_list
+    return random.choice(l)
+           ^^^^^^^^^^^^^^^^
+  File ""/usr/lib/python3.12/random.py"", line 347, in choice
+    raise IndexError('Cannot choose from an empty sequence')
+",local
+284,'data',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 242, in query_and_preserve_use
+    if res.json()[""data""] != ""Success"":
+       ~~~~~~~~~~^^^^^^^^
+",local
+1,'NoneType' object has no attribute 'get',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 265, in query_and_cancel_use
+    _, token = self.login()
+               ^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 99, in login
+    uid = data.get(""userId"")
+          ^^^^^^^^
+",local
+1,'NoneType' object has no attribute 'get',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 123, in query_advanced_ticket_use
+    _, token = self.login()
+               ^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 99, in login
+    uid = data.get(""userId"")
+          ^^^^^^^^
+",local
+1,'NoneType' object has no attribute 'get',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 290, in query_and_enter_station_use
+    _, token = self.login()
+               ^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 99, in login
+    uid = data.get(""userId"")
+          ^^^^^^^^
+",local
+1,'NoneType' object has no attribute 'get',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 384, in query_route_use
+    _, token = self.login()
+               ^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 99, in login
+    uid = data.get(""userId"")
+          ^^^^^^^^
+",local
+217,object of type 'NoneType' has no len(),"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 200, in query_and_preserve_use
+    trip_id = self.random_from_list(trip_ids)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 31, in random_from_list
+    return random.choice(l)
+           ^^^^^^^^^^^^^^^^
+  File ""/usr/lib/python3.12/random.py"", line 346, in choice
+    if not len(seq):
+           ^^^^^^^^
+",local
+12,Expecting value: line 1 column 1 (char 0),"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 424, in query_travel_left_use
+    self.query_travel_left(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 1051, in query_travel_left
+    trip_ids = self.query_normal_ticket(place_pair=other_place_pair, headers=headers, time=time.strftime(""%Y-%m-%d"", time.localtime()))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 486, in query_normal_ticket
+    self.logger.warning(f""request for {url} failed. response data is {response.json()}"")
+                                                                      ^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/requests/models.py"", line 978, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+",local
+33,Expecting value: line 1 column 1 (char 0),"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 241, in query_and_preserve_use
+    print(res.json())
+          ^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/requests/models.py"", line 978, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+",local
+6,Expecting value: line 1 column 1 (char 0),"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 181, in query_and_preserve_use
+    trip_ids = self.query_normal_ticket(place_pair=other_place_pair, headers=headers, time=tomorrow)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 486, in query_normal_ticket
+    self.logger.warning(f""request for {url} failed. response data is {response.json()}"")
+                                                                      ^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/requests/models.py"", line 978, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+",local
+1,"can only concatenate str (not ""NoneType"") to str","  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 419, in query_travel_left_use
+    headers[""Authorization""] = ""Bearer "" + token
+                               ~~~~~~~~~~^~~~~~~
+",local
+1,'NoneType' object has no attribute 'url',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 332, in query_and_rebook_use
+    self.query_and_rebook(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 978, in query_and_rebook
+    pairs2 = self.query_orders(headers=headers, types=tuple([1]), query_other=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 647, in query_orders
+    response = self.client.post(url=url, headers=headers, json=payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/clients.py"", line 286, in post
+    return self.request(""POST"", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/clients.py"", line 196, in request
+    url = request_before_redirect.url  # type: ignore
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+",local
+1,'NoneType' object has no attribute 'url',"  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 340, in run
+    self.execute_next_task()
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 373, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/user/task.py"", line 385, in execute_task
+    task(self)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 285, in query_and_collect_ticket_use
+    self.query_and_collect_ticket(headers=headers)
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 923, in query_and_collect_ticket
+    pairs = self.query_orders(headers=headers, types=tuple([0]))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/load_generator_trainticket.py"", line 647, in query_orders
+    response = self.client.post(url=url, headers=headers, json=payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/clients.py"", line 286, in post
+    return self.request(""POST"", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/ubuntu/evaluation/.venv/lib/python3.12/site-packages/locust/clients.py"", line 196, in request
+    url = request_before_redirect.url  # type: ignore
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+",local
