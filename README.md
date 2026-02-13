@@ -79,7 +79,7 @@ python predict_scale.py
 ### 4. Generate the load to simulate workload
 
 ```bash
-python predict_scale.py
+python evaluation/load_generator_<APPNAME>.py
 ```
 
 **Benchmark Application References**
