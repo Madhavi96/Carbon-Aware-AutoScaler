@@ -25,13 +25,12 @@ Scaling aggressiveness is dynamically adjusted based on carbon intensity levels 
 - energy consumption  
 - carbon emissions  
 
-The system is evaluated on three benchmark microservice applications:
+The system is evaluated on three benchmark microservice applications [1–3]:
 
-- TrainTicket  
-- OnlineBoutique  
-- Bookinfo  
+- TrainTicket [1]  
+- OnlineBoutique [2]  
+- Bookinfo [3]  
 
----
 
 ## Key Results
 
@@ -82,3 +81,13 @@ python predict_scale.py
 ```bash
 python predict_scale.py
 ```
+
+**Benchmark Application References**
+
+[1] Train-Ticket: A Benchmark Microservice System, Fudan SE Lab. Available at: https://github.com/FudanSELab/train-ticket (accessed 13 Feb 2026).
+
+[2] Online Boutique: Cloud-Native Microservices Demo Application, Google Cloud Platform. Available at: https://github.com/GoogleCloudPlatform/microservices-demo (accessed 13 Feb 2026).
+
+[3] Bookinfo Sample Application, Istio. Available at: https://istio.io/latest/docs/examples/bookinfo/ (accessed 13 Feb 2026).
+
+---
