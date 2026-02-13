@@ -1,32 +1,84 @@
-# Carbon Aware AutoScaler for Scaling Microservices based Applications in cloud
+# Carbon-Aware Autoscaling for Performance-Aware Microservices  
+## Artifact Package – ICSA 2026 Submission
 
-### Project Overview
-- With the rapid growth of microservices-based applications in the cloud, the demand for scalable computing resources has led to increased energy consumption and carbon emissions.
-- Traditional approaches that limit computing resources during high carbon intensity periods often compromise application performance, particularly response times.
-- This project aims to build and evaluate a machine learning-based carbon-aware autoscaler that addresses the tradeoff between sustainability (energy consumption) and performance ().
+This repository contains the replication package for the paper:
 
-### Key Objectives
-- Incorporate Carbon Awareness: Use carbon intensity data to guide scaling decisions, aligning cloud operations with sustainability goals.
-- Balance Performance & Energy Trade-off: Maintain critical performance metrics (e.g., response time) while reducing carbon emissions.
-- Integrate Machine Learning: Explore ML-based autoscaling techniques to enhance energy efficiency without significant performance degradation.
-This solution aims to improve the sustainability of cloud-native applications while ensuring optimal performance. 🚀
+**Green Autoscaler for Performance-Aware Microservices: A Machine Learning Approach**
 
-### Methodology
+---
 
-- Inspired by the DeepScaler [https://github.com/SYSU-Workflow-Lab/DeepScaler] project, we have developed a novel mechanism to take into account the carbon emission in scaling decisions, and make better scaling decisions which are carbon-aware and have least impact to the application response time.
+## Summary
 
+This artifact implements the proposed approach for Kubernetes-based microservice applications.
 
-- Proposed Pipeline
+Unlike traditional autoscalers such as Kubernetes Horizontal Pod Autoscaler (HPA), which rely solely on performance metrics (e.g., CPU utilization), the proposed system integrates these into the autoscaling control loop.
 
-<img width="562" alt="image" src="https://github.com/user-attachments/assets/59b7354b-fa81-4d31-bb08-ab8a3f3cc803" />
-
-- Model Architecture
-<img width="313" alt="image" src="https://github.com/user-attachments/assets/d583f20d-bed8-40ae-97bf-70ec52a9dc34" />
+- workload dynamics  
+- inter-service dependencies  
+- real-time regional carbon intensity data  
 
 
-### Evaluation Results
- - Response Time comparison 
-<img width="450" alt="image" src="https://github.com/user-attachments/assets/59101ffa-82a6-484a-9b20-b699d3039919" />
+Machine learning models based on Spatio-Temporal Graph Convolutional Networks (STGCN) predict pod  counts using monitored system metrics.  
+Scaling aggressiveness is dynamically adjusted based on carbon intensity levels to balance:
 
-- Carbon footprint comparison
-<img width="455" alt="image" src="https://github.com/user-attachments/assets/829b59de-a151-492c-84c2-2c30def79a59" />
+- response time  
+- energy consumption  
+- carbon emissions  
+
+The system is evaluated on three benchmark microservice applications:
+
+- TrainTicket  
+- OnlineBoutique  
+- Bookinfo  
+
+---
+
+## Key Results
+
+Compared to Kubernetes HPA, the proposed autoscaling approach achieves:
+
+- **~24% reduction in carbon emissions** in high carbon-intensity regions (300 gCO₂/kWh)  
+- **~17% reduction in carbon emissions** in low carbon-intensity regions (100 gCO₂/kWh)  
+- Comparable performance under low-carbon conditions  
+
+Inference overhead remains approximately: ~2.6 kJ per autoscaling cycle
+
+
+This overhead becomes negligible for medium and large microservice deployments.
+
+---
+
+## Reproducing the Results
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/Madhavi96/Carbon-Aware-AutoScaler
+cd Carbon-Aware-AutoScaler
+```
+
+### 2. Deploy the applications, and generate Ground Truth Data
+
+Navigate to the `collect_dataset` directory and run the ground truth generation script for your target application. Replace the <APPNAME> with the desired app name - `trainticket, onlineboutique, bookinfo`.
+
+```bash
+cd collect_dataset
+bash generate_ground_truth_<APPNAME>.sh
+```
+
+### 2. Train the model
+```bash
+cd ../Deepscaler
+python prepareData.py
+python main.py
+```
+### 3. Run inference and evaluation pipeline
+```bash
+python predict_scale.py
+```
+
+### 4. Generate the load to simulate workload
+
+```bash
+python predict_scale.py
+```
